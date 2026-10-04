@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>She Connects</title>
+<style>
+:root{--bg:#F5F0FF;--card:#FFFDF9;--ink:#29213D;--mut:#6A617D;--ac:#7048C8;--ac2:#9ED8C5;--ln:#E6DDF7;--c3:#F6D77A;--c4:#F47C7C;--pe:#9B8AFB;--hov:#5635A5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1730;--card:#2a2140;--ink:#f1ebfb;--mut:#b7accb;--ac:#a58cec;--ac2:#9ED8C5;--ln:#3d3258;--c3:#F6D77A;--c4:#F47C7C;--hov:#c2aef5}.pill.l,.av,.btn:not(.alt){color:#1d1730}}
+:root[data-theme="dark"]{--bg:#1d1730;--card:#2a2140;--ink:#f1ebfb;--mut:#b7accb;--ac:#a58cec;--ac2:#9ED8C5;--ln:#3d3258;--c3:#F6D77A;--c4:#F47C7C;--hov:#c2aef5}.pill.l,.av,.btn:not(.alt){color:#1d1730}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,'Times New Roman',serif}
+h1,h2,h3,button,nav,.sans{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--ln);z-index:5;padding:8px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.logo{font:800 20px system-ui;color:var(--ac2)}.logo b{color:var(--ac)}
+nav{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:100%;order:3}
+nav button{background:none;border:0;color:var(--mut);padding:8px 10px;font-size:15px;white-space:nowrap;cursor:pointer;border-radius:8px}
+nav button.on{color:var(--ink);background:var(--card);font-weight:700}
+.tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+select,input,textarea{font:inherit;font-size:16px;padding:9px;border:1px solid var(--ln);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+.btn{background:var(--ac);color:#fff;border:0;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:15px}
+.btn.alt{background:none;color:var(--ink);border:1.5px solid var(--ink)}.btn.sm{padding:6px 12px;font-size:14px}.btn.on{background:var(--ac2)}
+main{max-width:1050px;margin:0 auto;padding:18px 14px 80px}
+.hero{background:linear-gradient(180deg,var(--ac2),#1f3329);color:#f4efe6;border-radius:16px;padding:34px 22px 90px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(34px,8vw,64px);margin:0;letter-spacing:-1px;line-height:1}
+.hero svg{position:absolute;bottom:0;left:0;width:100%;height:80px}
+.pill{display:inline-block;background:var(--ln);color:var(--ink);border-radius:20px;padding:3px 11px;margin:2px;font:14px system-ui}.pill.t{background:var(--ac2);color:#fff}.pill.l{background:var(--ac);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:14px;border-top:3px solid var(--ac)}
+.card h3{margin:0 0 4px}.mut{color:var(--mut);font-size:14px}
+h2{margin:28px 0 10px;font-size:24px}
+.pat{height:8px;background:repeating-linear-gradient(90deg,var(--ac) 0 12px,transparent 12px 16px,var(--ac2) 16px 28px,transparent 28px 32px);margin:18px 0;border-radius:4px}
+.bar{height:8px;background:var(--ln);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac2)}
+.match{background:#e8f0e6;color:#2f4a2f;border-radius:8px;padding:6px 10px;font:700 14px system-ui;margin:6px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:20;font:15px system-ui}
+.demo{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);border-radius:12px;padding:12px;z-index:15;max-width:640px;margin:auto}
+.low *{animation:none!important;transition:none!important}.low .hero svg,.low .pat{display:none}
+label{display:block;font:600 14px system-ui;margin:8px 0 3px}
+.cmod{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;overflow:auto}
+.cert{background:#fff;color:#29213D;border:8px double #7048C8;padding:30px 22px;text-align:center;max-width:640px;width:100%}.cert h1{font-size:30px;margin:6px 0}.cert .nm{font:italic 34px Georgia;color:#7048C8;margin:10px 0}
+@media print{body>*:not(.cmod){display:none!important}.cmod{position:static;background:none}.no{display:none}}
+
+:root{--sh:0 1px 2px rgba(60,40,20,.06),0 10px 28px -14px rgba(60,40,20,.22);--r:16px;--serif:'Fraunces',Georgia,serif}
+body{font:16px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif}
+h1,h2,h3,.logo{font-family:var(--serif)!important;font-weight:600}
+header{padding:10px 22px;backdrop-filter:blur(10px)}
+.logo{font-size:23px;font-weight:700}
+nav{gap:4px}nav button{background:none!important;border-radius:0;border-bottom:2px solid transparent;padding:8px 12px;font-weight:500}
+nav button.on{border-color:var(--ac);color:var(--ink);font-weight:700}
+main{padding:28px 20px 90px}
+h2{font-size:28px;margin:48px 0 18px;display:flex;align-items:center;gap:14px}
+h2::after{content:"";flex:1;height:1px;background:var(--ln)}
+.grid{gap:16px}
+.card{border:1px solid var(--ln);border-radius:var(--r);box-shadow:var(--sh);padding:18px;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}.card h3{font-size:19px;margin:0 0 6px}
+.btn{border-radius:999px;padding:11px 20px}.btn.sm{padding:7px 14px}
+.pill{border-radius:999px;padding:3px 12px}
+.hero{border-radius:24px;padding:60px 32px 130px;background:radial-gradient(circle at 88% 8%,#f2b13499 0,transparent 38%),radial-gradient(circle at 10% 90%,#dc4a3866 0,transparent 40%),linear-gradient(135deg,#0f766e,#0f5c85 55%,#5b4bc4)}
+.hero h1{font-size:clamp(42px,9vw,80px);line-height:.98;max-width:700px}
+.hero svg{height:110px}.eyebrow{letter-spacing:.2em;font-size:13px;opacity:.75}
+.hstats{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap}.hstats b{display:block;font:600 28px var(--serif)}.hstats span{font-size:13px;opacity:.75}
+.quote{border-left:4px solid var(--ac);padding:6px 0 6px 20px;font:italic 500 22px/1.45 var(--serif);margin:32px 0}
+.chain{overflow-x:auto;white-space:nowrap;padding:8px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.stat{background:var(--card);border:1px solid var(--ln);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
+.stat b{display:block;font:600 36px/1.1 var(--serif);color:var(--ac)}.stat span{color:var(--mut);font-size:14px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--ac2);color:#fff;display:grid;place-items:center;font:600 20px var(--serif);flex:none}
+.cat{display:inline-flex;gap:6px;align-items:center;background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:8px 14px;margin:4px 4px 4px 0;cursor:pointer;font-size:15px}.cat:hover{border-color:var(--ac)}
+footer{border-top:1px solid var(--ln);text-align:center;color:var(--mut);padding:28px 16px calc(28px + env(safe-area-inset-bottom,0px));font-size:14px}
+.low .card:hover{transform:none}
+h2::after{height:2px;background:linear-gradient(90deg,var(--ac),var(--c3),var(--c4),transparent)}
+.pat{height:6px;background:repeating-linear-gradient(90deg,var(--ac) 0 12px,transparent 12px 16px,var(--ac2) 16px 28px,transparent 28px 32px,var(--c3) 32px 44px,transparent 44px 48px,var(--c4) 48px 60px,transparent 60px 64px)}
+.grid>.card:nth-child(4n+1),.stats>.stat:nth-child(4n+1){border-top:4px solid var(--ac)}
+.grid>.card:nth-child(4n+2),.stats>.stat:nth-child(4n+2){border-top:4px solid var(--ac2)}
+.grid>.card:nth-child(4n+3),.stats>.stat:nth-child(4n+3){border-top:4px solid var(--c3)}
+.grid>.card:nth-child(4n),.stats>.stat:nth-child(4n){border-top:4px solid var(--c4)}
+.stats>.stat:nth-child(4n+2) b{color:var(--ac2)}.stats>.stat:nth-child(4n+3) b{color:var(--c3)}.stats>.stat:nth-child(4n) b{color:var(--c4)}
+.av{background:linear-gradient(135deg,var(--ac2),var(--c4))}
+.cat:nth-child(4n+1){background:color-mix(in srgb,var(--ac) 10%,var(--card))}.cat:nth-child(4n+2){background:color-mix(in srgb,var(--ac2) 10%,var(--card))}
+.cat:nth-child(4n+3){background:color-mix(in srgb,var(--c3) 16%,var(--card))}.cat:nth-child(4n){background:color-mix(in srgb,var(--c4) 12%,var(--card))}
+.quote{border-left-color:var(--ac2)}
+body{background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--c4) 5%,var(--bg)))}
+
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg)}
+button,nav,.sans,input,select,textarea{font-family:'Inter',system-ui,sans-serif}
+.logo{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:22px;line-height:1}.logo b{color:var(--ac)}.logo small{display:block;font:500 10px/1.3 'Inter',sans-serif;letter-spacing:.06em;color:var(--mut);margin-top:3px}
+.btn:not(.alt):not(.on){background:var(--ac)}.btn:not(.alt):not(.on):hover{background:var(--hov)}
+.btn.alt{border-color:var(--ac);color:var(--ac)}.btn.alt:hover{background:var(--ln)}
+.btn.on,.pill.t{background:var(--ink);color:var(--card)}
+.hero{background:radial-gradient(circle at 90% 8%,#D8B5664d 0,transparent 36%),linear-gradient(135deg,#3f2a7a,#7048C8)}
+h2::after{height:1px;background:var(--ln)}
+.av{background:var(--ac)}
+.stats>.stat b{color:var(--ac)!important}
+.grid>.card:nth-child(n),.stats>.stat:nth-child(n){border-top:1px solid var(--ln)}
+.card:hover{border-color:var(--ac)}
+nav button.on{border-color:var(--ac)}
+.ill{display:inline-block;width:0;height:1.3em;opacity:0;overflow:hidden;vertical-align:middle;transition:width .2s ease,opacity .2s ease,margin .2s ease}
+.ill svg{width:1.3em;height:1.3em;fill:none;stroke:#7048C8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ill .r{fill:#F47C7C;stroke:none}.ill .g{fill:#F6D77A;stroke:none}.ill .s{fill:#9ED8C5;stroke:none}
+nav button:hover .ill,nav button:focus-visible .ill,nav button.on .ill,.card:hover h3 .ill{width:1.3em;opacity:1;margin-left:6px}
+.card:hover h3 .ill svg,nav button:hover .ill svg,.hw:hover .ill svg{animation:fl 1.6s ease-in-out infinite}
+.hw{display:inline-block;margin-right:.25em}.hw:hover .ill{width:.8em;opacity:1;margin-left:.1em}.hw .ill{height:.8em}.hw .ill svg{width:.8em;height:.8em;stroke:#fff}
+@keyframes fl{50%{transform:translateY(-3px)}}
+.low .ill{display:none}
+@media(prefers-reduced-motion:reduce){.ill,.ill svg{animation:none!important;transition:none!important}}
+
+.btn{transition:transform .15s,box-shadow .15s,background .15s;border-radius:12px}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px -6px rgba(112,72,200,.55)}
+.btn.alt{background:var(--card);border-color:var(--ac);color:var(--ink)}.hero .btn.alt{background:transparent}
+.btn.on{background:var(--ac2);color:#29213D}.pill.t{background:var(--ac2);color:#29213D}.pill.l{background:var(--c4);color:#29213D}
+.match{background:#e0f4ec;color:#1f5a49}
+.card{border-radius:14px;position:relative}.card h3{max-width:calc(100% - 52px)}
+.hero{background:radial-gradient(circle at 12% 95%,#F47C7C44 0,transparent 35%),linear-gradient(135deg,#5635A5,#7048C8 70%,#9B8AFB)}
+.hero::before{content:"";position:absolute;right:9%;top:16%;width:74px;height:74px;border-radius:50%;background:#F6D77A}
+.low .hero::before{display:none}
+.ill svg{stroke:none}.hw .ill svg{stroke:none;background:#FFFDF9;border-radius:50%}
+nav .ill{height:1.7em}nav button:hover .ill,nav button.on .ill,nav button:focus-visible .ill{width:1.7em}nav .ill svg{width:1.7em;height:1.7em}
+#app .card:hover h3 .ill{width:0;margin:0}#app .card h3 .ill{position:static;display:inline}
+.card h3 .ill svg{position:absolute;top:10px;right:12px;width:46px;height:46px;opacity:0;transform:translateY(8px) scale(.85);transition:opacity .2s,transform .25s}
+.card:hover h3 .ill svg{opacity:1;transform:none;animation:fl 2s .25s ease-in-out infinite}
+.ld{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:50;transition:opacity .4s;color:var(--ink)}.ld.x{opacity:0}
+.ld b{font:700 30px var(--serif)}.ld small{color:var(--mut)}.ld svg{width:64px;height:64px;animation:fl 1s ease-in-out infinite}
+
+.fab{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:12;background:#7048C8;color:#fff;border:0;border-radius:999px;padding:12px 18px;font:600 15px 'Inter',system-ui,sans-serif;box-shadow:0 8px 20px -8px rgba(112,72,200,.7);cursor:pointer}.fab:hover{background:#5635A5}
+.chat{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(370px,calc(100vw - 24px));height:min(500px,72vh);background:var(--card);border:1px solid var(--ln);border-radius:16px;box-shadow:0 18px 40px -12px rgba(41,33,61,.4);z-index:25;display:flex;flex-direction:column;overflow:hidden}.chat[hidden],.fab[hidden]{display:none}
+.ch{background:#7048C8;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}.ch button{background:none;border:0;color:#fff;font-size:18px;cursor:pointer}
+.cmsg{flex:1;overflow-y:auto;padding:10px 12px}.m{padding:8px 12px;border-radius:12px;margin:6px 0;max-width:88%;white-space:pre-wrap;font-size:15px;line-height:1.45}.m.me{background:#7048C8;color:#fff;margin-left:auto}.m.ai{background:var(--bg);color:var(--ink)}
+.cq{display:flex;gap:6px;overflow-x:auto;padding:0 10px 6px}.cq button{white-space:nowrap;background:var(--card);border:1px solid var(--ln);color:var(--ink);border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer}
+.cin{display:flex;gap:6px;padding:10px;border-top:1px solid var(--ln)}.cin input{flex:1;min-width:0}
+
+.box{background:var(--card);color:var(--ink);border-radius:16px;padding:20px;max-width:540px;width:100%;max-height:90vh;overflow:auto}.notes h4{margin:12px 0 4px;font-family:var(--serif)}.notes ul{margin:0;padding-left:20px}
+.vs{position:fixed;inset:0;z-index:40;background:#1d1730;color:#f5f0ff;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.vh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}.vm{font-size:13px;opacity:.75}.vt{font:600 20px 'Inter',sans-serif}
+.vb{background:#F6D77A;color:#29213D;padding:8px 16px;font-size:13px}.vmain{flex:1;display:flex;min-height:0}.vstage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;padding:12px}
+.vtile{background:#2b2342;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;overflow:hidden;font-size:13px}.vtile.big{width:min(100%,720px);aspect-ratio:16/9}.vside{position:absolute;right:16px;bottom:16px}.vside .vtile{width:130px;height:96px}.vtile video{width:100%;height:100%;object-fit:cover}.av.big{width:80px;height:80px;font-size:34px}
+.vpanel{width:340px;background:var(--card);color:var(--ink);padding:14px;overflow:auto}.vcm{max-height:220px;overflow:auto}.vctl{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:12px}.vind{text-align:center;color:#F47C7C;font-size:13px}
+.vctl button{background:#3a2f57;color:#fff;border:0;border-radius:999px;padding:11px 16px;cursor:pointer;font:600 14px 'Inter',system-ui}.vctl button.on{background:#7048C8}.vctl button.end{background:#F47C7C;color:#29213D}
+@media(max-width:700px){.vmain{flex-direction:column}.vpanel{width:100%;max-height:48%}}
+
+.pf{background:var(--pb);color:var(--pi);font-family:var(--pf);border-radius:18px;padding:26px;border:1px solid var(--ln);margin:14px 0;box-shadow:var(--sh)}
+.pf h1{font:600 clamp(30px,6vw,48px)/1.05 var(--pf);margin:0;color:var(--pi)}.pf h3{font-family:var(--pf);color:var(--pa);margin:26px 0 10px;font-size:20px}.pf .psub,.pf .pv{opacity:.7;font-size:13px}.pf p{margin:6px 0}.pf a{color:var(--pa);word-break:break-all}
+.pintro{font-size:18px;line-height:1.55;max-width:680px}.pk{margin:8px 0}.pf .pill:not(.t):not(.l){background:color-mix(in srgb,var(--pa) 16%,transparent);color:var(--pi)}
+.pi{border:1px solid color-mix(in srgb,var(--pi) 15%,transparent);border-radius:12px;padding:14px;margin:10px 0}.pi.hid{opacity:.45}.pi .pt{font:600 17px var(--pf);color:var(--pi)}.pi img{max-width:100%;border-radius:8px;margin:6px 0}
+.s-professional .pi{border-left:4px solid var(--pa)}
+.s-creative .phd{background:linear-gradient(135deg,#F47C7C,#9B8AFB);margin:-26px -26px 6px;padding:28px 26px;border-radius:18px 18px 0 0}.s-creative .phd h1,.s-creative .phd .psub,.s-creative .phd .pv,.s-creative .phd .pintro{color:#fff;opacity:1}.s-creative .pi:nth-child(3n+1){border-top:4px solid #F47C7C}.s-creative .pi:nth-child(3n+2){border-top:4px solid #9ED8C5}.s-creative .pi:nth-child(3n){border-top:4px solid #F6D77A}
+.s-academic h3{text-transform:uppercase;letter-spacing:.12em;font-size:14px;border-bottom:2px solid var(--pa);padding-bottom:4px}.s-academic .pi{border:0;border-bottom:1px solid #d8cfc0;border-radius:0;padding-left:0}
+.s-elegant .phd,.s-elegant h3,.s-elegant .pi{text-align:center}.s-elegant .pi{border:0;border-top:1px solid var(--pa);border-radius:0}.s-elegant .row{justify-content:center}
+.s-bold h1{font-size:clamp(40px,9vw,76px);text-transform:uppercase;letter-spacing:-1px}.s-bold h3{font-size:26px;text-transform:uppercase}.s-bold .pi{background:#2a2140;border:0;border-left:6px solid var(--pa)}
+.pvw{border:1px solid var(--ln);border-radius:12px;padding:12px;height:150px;overflow:hidden}.pvl{height:6px;border-radius:3px;margin:6px 0;width:60%}.pvl.s{width:40%;opacity:.4}.pvb{display:flex;gap:6px;margin-top:10px}.pvb i{flex:1;height:34px;border:2px solid;border-radius:6px}
+</style></head><body>
+<header><div class="logo" data-v="home" style="cursor:pointer"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 9c8-4 14 0 7 7s-1 11 8 7" fill="none" stroke="#7048C8" stroke-width="2.6" stroke-linecap="round"/><circle cx="8" cy="9" r="3.6" fill="#F47C7C"/><circle cx="25" cy="23" r="3.6" fill="#9ED8C5"/><circle cx="16" cy="16" r="3" fill="#F6D77A"/></svg><span>She <b>Connects</b><small>Learn. Share. Connect. Grow.</small></span></div>
+<div class="tools"><button class="btn alt sm" id="demoB">🎪 <span id="exL">Exhibition</span></button><button class="btn alt sm" id="lowB">📶 Low data</button>
+<select id="lang"><option value="en">English</option><option value="ur">اردو</option><option value="khw">Khowar</option></select>
+<button class="btn alt sm" data-v="profile" title="Profile">👤</button></div>
+<nav id="nav"></nav></header>
+<main id="app"></main><footer><b>She Connects</b> · Learn. Share. Connect. Grow.<br>Talent exists everywhere. Opportunity doesn't.<br>🏔️ Built for girls in Chitral · Fictional demo data</footer><div id="ov"></div>
+<script>
+const $=s=>document.querySelector(s);
+const T={en:{home:"Home",explore:"Explore Skills",swap:"Skill Swap",projects:"Projects",mentor:"Mentorship",opps:"Opportunities",comm:"Communities",events:"Events",portfolio:"Portfolio",h1:"LEARN. TEACH. CONNECT.",sub:"A skill-sharing community built for girls in Chitral.",b1:"Explore Skills",b2:"Join the Community",ex:"Exhibition",low:"Low data"},
+ur:{home:"ہوم",explore:"ہنر تلاش کریں",swap:"ہنر کا تبادلہ",projects:"منصوبے",mentor:"رہنمائی",opps:"مواقع",comm:"کمیونٹیز",events:"تقریبات",portfolio:"پورٹ فولیو",h1:"سیکھیں۔ سکھائیں۔ جڑیں۔",sub:"چترال کی لڑکیوں کے لیے ہنر بانٹنے کی کمیونٹی۔",b1:"ہنر تلاش کریں",b2:"کمیونٹی میں شامل ہوں",ex:"نمائش",low:"کم ڈیٹا"},
+khw:{}}; // Khowar: placeholder, falls back to English — add translations here
+const t=k=>(T[S.lang]&&T[S.lang][k])||T.en[k]||k;
+const CATS=[["💻","Technology"],["🎨","Art & Design"],["📸","Photography"],["🎬","Film & Video"],["📚","Academics"],["🗣️","Languages"],["💼","Business"],["💰","Finance"],["🎤","Public Speaking"],["🧵","Crafts"],["🎵","Music"],["🍳","Cooking"],["🏃","Sports"],["✍️","Writing"],["🌱","Environment"]];
+const USERS=[
+{n:"Mehak",g:"Grade 12",a:"Chitral Town",teach:["Python","Mathematics"],learn:["Canva","Public speaking"],int:["Technology"],av:["Sat","Sun"],lv:"Intermediate"},
+{n:"Sana",g:"BS Student",a:"Booni",teach:["Photography","Canva"],learn:["Excel","Python"],int:["Film","Technology"],av:["Sat"],lv:"Advanced"},
+{n:"Hira",g:"Grade 10",a:"Drosh",teach:["Public speaking","English speaking"],learn:["Python"],int:["Writing"],av:["Fri","Sat"],lv:"Intermediate"},
+{n:"Zoya",g:"Grade 11",a:"Mastuj",teach:["Video editing","Excel"],learn:["Canva","Photography"],int:["Film"],av:["Sun"],lv:"Intermediate"},
+{n:"Mahnoor",g:"Grade 9",a:"Chitral Town",teach:["Mathematics","Urdu writing"],learn:["English speaking","Video editing"],int:["Writing","Technology"],av:["Sat","Sun"],lv:"Beginner"}];
+const PROJ=[
+{id:1,n:"Chitral Girls Digital Magazine",p:"Local girls' stories have no platform",need:["Writers","Designers","Photographers","Web developers"],m:11,st:"Active",i:"📰"},
+{id:2,n:"Short Film: The Last Weaver",p:"Documenting a fading Chitrali craft",need:["Editors","Camera","Scriptwriters"],m:6,st:"Recruiting",i:"🎬"},
+{id:3,n:"Clean Chitral River Campaign",p:"Plastic waste along the river",need:["Designers","Researchers","Speakers"],m:9,st:"Active",i:"🌱"},
+{id:4,n:"Girls' Study App",p:"Past papers hard to find offline",need:["Developers","Teachers","Testers"],m:5,st:"Planning",i:"💻"},
+{id:5,n:"Handmade Chitrali Caps Shop",p:"Craftswomen lack online sales",need:["Photographers","Marketers"],m:4,st:"Recruiting",i:"💼"},
+{id:6,n:"Valley Voices Podcast",p:"Stories in Khowar and Urdu",need:["Hosts","Audio editors"],m:7,st:"Active",i:"🎤"}];
+const OPP=[
+{n:"Youth Filmmaking Competition",ty:"Competition",d:"2026-10-20",el:"Students 14–22",loc:"Pakistan",cost:"Free",on:true,sk:"Video, storytelling"},
+{n:"Open Source Coding Course",ty:"Free course",d:"2026-11-30",el:"Anyone",loc:"International",cost:"Free",on:true,sk:"Basic computer"},
+{n:"Women in STEM Scholarship",ty:"Scholarship",d:"2026-10-12",el:"Grade 11+",loc:"Pakistan",cost:"Free",on:false,sk:"Academics"},
+{n:"Essay Contest: My Valley",ty:"Essay competition",d:"2026-12-05",el:"Students",loc:"Pakistan",cost:"Free",on:true,sk:"Writing"},
+{n:"Youth Exchange Fellowship",ty:"Exchange",d:"2027-01-15",el:"Ages 16–19",loc:"International",cost:"Free",on:false,sk:"English"},
+{n:"Design Workshop (Peshawar)",ty:"Workshop",d:"2026-11-05",el:"Students",loc:"Pakistan",cost:"Rs 500",on:false,sk:"Canva basics"}];
+const COMM=[["🎬","Girls in Film",42],["💻","Girls Who Code",58],["📚","Book Club",36],["🎨","Artists of Chitral",31],["💼","Young Entrepreneurs",24],["🌱","Eco Girls",27],["📸","Photography Club",39],["🎤","Debate & Public Speaking",33]];
+const PATHS={"💻 Beginner Coder":["Computer basics","HTML","CSS","JavaScript","First website","Join a coding project"],"🎨 Graphic Designer":["Design basics","Color & type","Canva","Poster project"],"🎤 Public Speaker":["Voice basics","Structure a talk","Practice in a group","Give a 3-min talk"]};
+const EVENTS=[["Canva Basics (Sana)","Sat","Online",true],["Python Swap Circle","Sat","In-person",true],["Magazine Team Meeting","Sun","Online",true],["Public Speaking Group","Fri","In-person",true],["Today: Study Hour","Today","Online",true]];
+const MENT=[["Scholarships","Rabia, 31 · Education advisor"],["Coding","Aliya, 24 · Software engineer"],["Public speaking","Noor, 22 · University student & debater"],["University applications","Fatima, 36 · Doctor"],["Entrepreneurship","Sadia, 33 · Business owner"],["Career exploration","Mehreen, 40 · Teacher"]];
+const CHAL=["🎨 Design a poster about Chitral","🎬 Make a 60-second short film","💻 Build a simple webpage","✍️ Write 300 words about your hometown","📸 Photograph everyday life in Chitral"];
+const BADGES=["🏅 First Skill Shared","🌱 First Skill Learned","🤝 First Skill Exchange","🎓 Completed Path","💡 Project Contributor","🌟 Community Mentor","🏔️ Chitral Creator"];
+let D={me:{n:"Ayesha",g:"Grade 11",a:"Chitral Town",teach:["Canva","Photography","Urdu writing"],learn:["Python","Public speaking","Video editing"],int:["Film","Technology","Writing"],av:["Sat"],lv:"Intermediate",hide:{a:true}},swaps:[],joined:[],port:[{k:"🎨",t:"Chitral poster"},{k:"💻",t:"Class website"}],badges:[]};
+let S={v:"home",lang:"en",low:false,q:"",cat:"",f:{}};
+try{const x=JSON.parse(localStorage.getItem("sc")||"null");if(x)D=x.D;if(x)S.lang=x.lang||"en";S.low=x?.low||false}catch(e){}
+D.sessions=D.sessions||[];D.joinedS=D.joinedS||[];D.calls=D.calls||[];D.notes=D.notes||[];D.pf=D.pf||{style:null,auto:true,items:[],removed:[],intro:null};D.pdone=D.pdone||{};D.sdone=D.sdone||[];D.ev=D.ev||{};D.pathsDone=D.pathsDone||[];D.since=D.since||Date.now();D.swaps=D.swaps.map((x,i)=>({id:"w"+i,st:"pending",day:"Saturday",time:"Afternoon",fmt:"Online",...x}));
+const save=()=>{try{localStorage.setItem("sc",JSON.stringify({D,lang:S.lang,low:S.low}))}catch(e){}};
+const toast=m=>{const e=document.createElement("div");e.className="toast";e.textContent=m;document.body.append(e);setTimeout(()=>e.remove(),3400);return e};
+const badge=b=>{if(!D.badges.includes(b)){D.badges.push(b);toast("Badge earned: "+(BADGES.find(x=>x.includes(b))||b));addAct("bd:"+b,"achievement",{badge:b},null,"Earned in She Connects")}};
+const pills=(a,c="")=>a.map(x=>`<span class="pill ${c}">${x}</span>`).join("");
+const ci=(a,b)=>a.filter(x=>b.some(y=>y.toLowerCase()===x.toLowerCase()));
+function score(u){const m=D.me,a=ci(m.learn,u.teach).length,b=ci(m.teach,u.learn).length;
+ let s=(a?35:0)+(b?35:0)+Math.min(10,ci(m.int,u.int).length*10)+(ci(m.av,u.av).length?10:0)+Math.min(10,(a+b)*5);return{s:Math.min(100,s),perfect:a&&b,a,b}}
+const NAV=["home","explore","swap","projects","mentor","opps","comm","events","portfolio"];
+function nav(){$("#nav").innerHTML=NAV.map(k=>`<button data-v="${k}" class="${S.v==k?'on':''}">${t(k)}<i class="ill">${ILL[IK[k]]}</i></button>`).join("")}
+function card(u){const m=score(u);return`<div class="card"><div class="row" style="flex-wrap:nowrap"><div class="av">${u.n[0]}</div><div><h3 style="margin:0">${u.n}</h3><div class="mut" style="margin-top:-2px">${u.g} · ${u.a} · ${u.lv}</div></div></div>
+<div class="mut">Can teach</div>${pills(u.teach,"t")}<div class="mut">Wants to learn</div>${pills(u.learn,"l")}
+${m.perfect?`<div class="match">✨ PERFECT SKILL MATCH — you can teach each other</div>`:""}
+<div class="mut">Compatibility ${m.s}%</div><div class="bar"><i style="width:${m.s}%"></i></div>
+<div class="row" style="margin-top:10px"><button class="btn sm" data-swap="${u.n}">${m.perfect?"Request Exchange":"Propose Swap"}</button><button class="btn alt sm" data-rep="${u.n}">🛡️ Report</button></div></div>`}
+const SESS=[{id:"s1",t:"Canva Basics",by:"Sana",lv:"Beginner",d:30,f:"Online",day:"Saturday",max:10},{id:"s2",t:"Python First Steps",by:"Mehak",lv:"Beginner",d:45,f:"In-person group",day:"Sunday",max:8}];
+const dd=()=>Math.floor((Date.now()-D.since)/864e5)+(D.skip?365:0);
+function sessions(){const all=[...SESS,...D.sessions],L=["Beginner","Intermediate","Advanced"],Dy=["Friday","Saturday","Sunday","Weekdays"];
+return`<h2>Teach Me sessions</h2><div class="grid">${all.map(s=>{const j=D.joinedS.includes(s.id);return`<div class="card"><h3>${s.t}</h3>Teacher: ${s.by} · ${s.lv} · ${s.d} min · ${s.f} · ${s.day}<div class="mut">Group of up to ${s.max} · ${j?"You're in":"Open"}</div><button class="btn sm ${j?'on':''}" data-js="${s.id}">${j?"✓ Joined":"Join Session"}</button> ${j?(D.sdone.includes(s.id)?'<span class="pill t">Completed</span>':`<button class="btn alt sm" data-a="sd:${s.id}">Mark completed</button>`):""}</div>`}).join("")}</div>
+<div class="card" style="margin-top:12px"><b>+ Create a session</b> <span class="mut">— under 2 minutes, group only for safety</span><label>What will you teach?</label><input id="st" placeholder="e.g. Intro to Excel" style="width:100%"><div class="row" style="margin-top:8px"><select id="sl">${L.map(x=>`<option>${x}</option>`)}</select><select id="sd"><option>30</option><option>45</option><option>60</option></select> min<select id="sf"><option>Online</option><option>In-person group</option></select><select id="sdy">${Dy.map(x=>`<option>${x}</option>`)}</select><input id="sm" type="number" min="2" max="30" value="8" style="width:75px" title="Max group size"></div><button class="btn" id="scr" style="margin-top:10px">Publish session</button></div>`}
+function certCard(){const d=Math.min(dd(),365),ok=dd()>=365;return`<h2>🎓 One-Year Certificate</h2><div class="card"><div>Stay active on She Connects for one year to earn your certificate.</div><div class="mut">${d} / 365 days</div><div class="bar"><i style="width:${d/3.65}%"></i></div><div class="row" style="margin-top:10px">${ok?'<button class="btn" id="cprev">View certificate</button>':'<button class="btn alt sm" id="cprev">Preview certificate</button>'}<button class="btn alt sm" id="cert">${D.skip?"Undo":"Demo: simulate 1 year"}</button></div></div>`}
+function cert(){const e=document.createElement("div"),ok=dd()>=365;e.className="cmod";e.innerHTML=`<div class="cert"><div class="sans mut">SHE CONNECTS</div><h1>Certificate of Completion</h1><div class="mut">One year of learning, teaching and growing together</div><div class="nm">${D.me.n}</div><div>${ok?"has completed one full year":"will complete one full year (PREVIEW)"} as a member of the She Connects community, sharing ${D.me.teach.length} skills and joining ${D.joined.length+D.joinedS.length} projects and sessions.</div><div class="mut" style="margin-top:14px">${new Date().toDateString()} · Chitral</div></div><div class="row no" style="margin-top:12px"><button class="btn" id="pp">Print / Save PDF</button><button class="btn alt" style="color:#fff;border-color:#fff" id="pc">Close</button></div>`;document.body.append(e);e.querySelector("#pp").onclick=()=>print();e.querySelector("#pc").onclick=()=>e.remove();if(ok)badge("🎓 Completed Path")}
+const w=x=>`<svg viewBox="0 0 40 40" aria-hidden="true">${x}</svg>`;
+const gl=(x,y,s,sk,hr,bd)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-6 6c0-7 3-9 6-9s6 2 6 9z" fill="${hr}"/><circle cx="0" cy="4" r="4.2" fill="${sk}"/><path d="M-5 5c1-5 9-5 10 0" fill="${hr}"/><path d="M-7 22c0-8 3-12 7-12s7 4 7 12z" fill="${bd}"/></g>`;
+const star=(x,y,c)=>`<path d="M${x} ${y}l1.8 3.7 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6z" fill="${c}"/>`;
+const ILL={
+learn:w(gl(14,9,1,'#F1C8A2','#29213D','#7048C8')+'<path d="M19 29l8-3 8 3v8l-8-3-8 3z" fill="#9ED8C5"/><path d="M27 26v8" stroke="#29213D" stroke-width="1"/>'+star(26,3,'#F6D77A')),
+teach:w(gl(12,10,1,'#C68B5E','#29213D','#F47C7C')+'<path d="M22 4h15v11h-7l-4 4v-4h-4z" fill="#9B8AFB"/><circle cx="29.500" cy="9.500" r="3" fill="#F6D77A"/>'),
+connect:w('<path d="M9 30L20 12l11 18z" stroke="#9B8AFB" stroke-width="2" fill="none"/>'+gl(20,7,.55,'#8A5A3C','#5B3A29','#7048C8')+gl(9,26,.55,'#C68B5E','#5B3A29','#F47C7C')+gl(31,26,.55,'#F1C8A2','#29213D','#9ED8C5')),
+projects:w('<rect x="4" y="9" width="21" height="15" rx="2" fill="#7048C8"/><rect x="7" y="12" width="15" height="9" rx="1" fill="#F5F0FF"/><path d="M2 27h25l-2 3H4z" fill="#9B8AFB"/><rect x="24" y="22" width="13" height="10" rx="2" fill="#F47C7C"/><circle cx="30.500" cy="27" r="3" fill="#FFFDF9"/>'+star(26,2,'#F6D77A')),
+opps:w('<path d="M3 36h9v-7h9v-7h9v-7h7v21z" fill="#9B8AFB"/>'+gl(26,6,.55,'#C68B5E','#29213D','#F47C7C')+star(5,6,'#F6D77A')),
+mentor:w(gl(13,8,1,'#8A5A3C','#5B3A29','#7048C8')+gl(28,17,.8,'#C68B5E','#5B3A29','#9ED8C5')+'<circle cx="31" cy="7" r="2.500" fill="#F47C7C"/>'),
+skills:w('<rect x="3" y="22" width="15" height="11" rx="1.500" fill="#7048C8"/><rect x="5" y="25" width="11" height="2" fill="#F6D77A"/><rect x="22" y="6" width="7" height="13" rx="3.500" fill="#F47C7C"/><path d="M19 16c0 7 4 9 6.500 9s6.500-2 6.500-9M25.500 25v7" stroke="#29213D" stroke-width="1.600" fill="none"/><path d="M33 33l4-9" stroke="#9ED8C5" stroke-width="3"/>'),
+community:w(gl(9,11,.75,'#F1C8A2','#29213D','#F47C7C')+gl(31,11,.75,'#C68B5E','#29213D','#9ED8C5')+gl(20,8,1,'#8A5A3C','#5B3A29','#7048C8')),
+portfolio:w('<path d="M3 11h12l3 4h19v20H3z" fill="#9B8AFB"/><rect x="8" y="17" width="11" height="13" fill="#F47C7C" transform="rotate(-6 14 24)"/><rect x="18" y="15" width="11" height="14" fill="#F6D77A" transform="rotate(5 22 22)"/><path d="M3 23h34v12H3z" fill="#7048C8"/>'),
+events:w('<rect x="5" y="8" width="30" height="26" rx="3" fill="#FFFDF9" stroke="#7048C8" stroke-width="2"/><path d="M5 16h30v-5a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3z" fill="#7048C8"/><circle cx="14" cy="25" r="2.500" fill="#F47C7C"/><circle cx="21" cy="25" r="2.500" fill="#9ED8C5"/><circle cx="28" cy="25" r="2.500" fill="#F6D77A"/>')};
+const IK={home:"connect",explore:"skills",swap:"teach",projects:"projects",mentor:"mentor",opps:"opps",comm:"community",events:"events",portfolio:"portfolio",profile:"learn"};
+const DAYS=["Friday","Saturday","Sunday"],TIMES=["Morning","Afternoon","Evening"],FMTS=["Online","In-person group"];
+function mySessions(){const L=D.swaps;return`<h2>My Sessions</h2>`+(L.length?`<div class="grid">`+L.map(z=>{const st={pending:"⏳ Waiting for "+z.w,scheduled:"📅 Scheduled",done:"✅ Completed"}[z.st];
+const sel=(f,o)=>`<select data-sf="${z.id}:${f}" ${z.st=="done"?"disabled":""}>${o.map(x=>`<option ${x==z[f]?"selected":""}>${x}</option>`).join("")}</select>`;
+return`<div class="card"><h3>${z.o.replace("30 min ","")} ⇄ ${z.r.replace("30 min ","")}</h3><span class="pill">${st}</span>
+<div class="mut" style="margin:8px 0">1. You teach <b>${z.o}</b> to ${z.w}<br>2. ${z.w} teaches you <b>${z.r}</b></div>
+<div class="row">${sel("day",DAYS)}${sel("time",TIMES)}${sel("fmt",FMTS)}</div>
+<div class="row" style="margin-top:10px">${z.st=="pending"?`<button class="btn sm" data-sa="${z.id}">Demo: ${z.w} accepts</button><button class="btn alt sm" data-sx="${z.id}">Cancel</button>`:z.st=="scheduled"?`<button class="btn sm" data-sc="${z.id}">Mark both sessions complete</button><button class="btn alt sm" data-sx="${z.id}">Cancel</button>`:`<span class="mut">Great teamwork! Badge earned.</span>`}</div>
+<div class="row" style="margin-top:8px">${swCall(z)}</div>${z.st=="scheduled"&&z.fmt=="Online"?`<div class="mut" style="margin-top:6px">Your online link appears here before the session. No phone numbers are shared.</div>`:""}</div>`}).join("")+`</div>`:`<p class="mut">No sessions yet. Propose a swap and it appears here with a schedule.</p>`)}
+
+/* ===== Real AI (calls the backend /api/ai; the API key lives only on the server) ===== */
+const AI_BASE="https://sheconnects.manahil-qasim15.workers.dev";
+class AIErr extends Error{constructor(c){super(c);this.code=c}}
+async function askAI(prompt,o={}){let res;try{res=await fetch(AI_BASE+"/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,system:o.system,json:!!o.json})})}catch(e){throw new AIErr("network")}
+if(res.status==503)throw new AIErr("config");if(!res.ok)throw new AIErr("failed");let d;try{d=await res.json()}catch(e){throw new AIErr("failed")}if(!d||typeof d.response!="string")throw new AIErr("failed");return d.response}
+const friendly=e=>e&&e.code=="config"?"AI service not configured. The site admin needs to add the API key on the server (see README).":e&&e.code=="network"?"We couldn't reach the AI service. Check your connection and that the backend is running.":"We couldn't generate your notes right now. Your session is still saved, and you can try again later.";
+const esc=x=>String(x==null?"":x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+async function genNotes(tr,topic){const t=await askAI(`Create study notes for a learning session.\nTopic: ${topic}\nTranscript (may be partial or imperfect):\n"""${tr.slice(-12000)}"""\nReturn ONLY JSON with keys: summary (2-3 sentences), topics (array of strings), keyPoints (array), explanations (array of strings), terms (array of {term, meaning}), questions (array), actionItems (array). Use only what is in the transcript; use empty arrays when something is missing. Do not include personal names or contact details.`,{json:true,system:"You are a careful note-taking assistant for students. Output valid JSON only."});
+try{return norm(JSON.parse(t.replace(/```json|```/g,"").trim()))}catch(e){throw new AIErr("failed")}}
+function norm(n){const a=x=>Array.isArray(x)?x.slice(0,20).map(v=>typeof v=="string"?v:JSON.stringify(v)):[];return{summary:String(n.summary||""),topics:a(n.topics),keyPoints:a(n.keyPoints),explanations:a(n.explanations),terms:Array.isArray(n.terms)?n.terms.slice(0,20).map(t=>({term:String(t.term||""),meaning:String(t.meaning||"")})):[],questions:a(n.questions),actionItems:a(n.actionItems)}}
+function renderNotes(n){const L=(h,a)=>a.length?`<h4>${h}</h4><ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";return`<div class="notes"><h4>Summary</h4><p>${esc(n.summary)}</p>${L("Main topics",n.topics)}${L("Important points",n.keyPoints)}${L("Key explanations",n.explanations)}${n.terms.length?`<h4>Important terms</h4><ul>${n.terms.map(t=>`<li><b>${esc(t.term)}</b>: ${esc(t.meaning)}</li>`).join("")}</ul>`:""}${L("Questions discussed",n.questions)}${L("Action items",n.actionItems)}</div>`}
+async function makeNote(c,tr){const n=await genNotes(tr,c.topic);const pi=D.pf.items.find(i=>i.key=="ms:"+c.id||i.key=="ses:"+c.id||(c.swapId&&i.key=="ex:"+c.swapId));if(pi&&n.topics.length){pi.facts.topicsFromSessionNotes=n.topics.slice(0,6);pi.ai=null;if(D.pf.style&&pi.inc)queueGen(pi.id)}D.notes.push({id:"n"+Date.now(),callId:c.id,title:c.topic,date:c.date,who:c.who,summary:n.summary,n});delete c.tr;delete c.noteErr;save();toast("Your session notes have been saved to your profile.")}
+/* ===== Scheduling ===== */
+const TZO={"Asia/Karachi":"+05:00","UTC":"Z"},LBL={pending:"Pending",proposed:"Time proposed",confirmed:"Confirmed",done:"Completed"};
+const cstart=c=>new Date(c.date+"T"+c.time+(TZO[c.tz]||"")),cfmt=c=>new Date(c.date+"T12:00").toLocaleDateString([],{weekday:"short",month:"short",day:"numeric"})+", "+c.time+" "+c.tz;
+const ready=c=>c.st=="confirmed"&&Date.now()>=+cstart(c)-9e5&&Date.now()<=+cstart(c)+(c.dur+30)*6e4;
+const modal=h=>{const e=document.createElement("div");e.className="cmod";e.innerHTML=`<div class="box">${h}</div>`;document.body.append(e);return e};
+function openSch(o){const c=o.id?D.calls.find(x=>x.id==o.id):null,b=c||o,ltz=Intl.DateTimeFormat().resolvedOptions().timeZone,tzs=[...new Set([ltz,"Asia/Karachi","UTC"])],today=new Date().toISOString().slice(0,10),t0=new Date(Date.now()+864e5).toISOString().slice(0,10);
+const e=modal(`<h2 style="margin-top:0">${c?"Reschedule":"Request a call"}</h2><div class="mut">Topic</div><b>${esc(b.topic)}</b><div class="mut" style="margin-top:6px">With</div><b>${esc(b.who)}</b>
+<label>Available date</label><input type="date" id="d1" min="${today}" value="${c?c.date:t0}"><label>Available time</label><input type="time" id="t1" value="${c?c.time:"16:00"}">
+<label>Time zone</label><select id="z1">${tzs.map(z=>`<option ${c&&c.tz==z?"selected":""}>${z}</option>`).join("")}</select><label>Session duration (minutes)</label><select id="u1">${[30,45,60].map(n=>`<option ${c&&c.dur==n?"selected":""}>${n}</option>`).join("")}</select>
+<label>Optional message</label><textarea id="m1" rows="3" style="width:100%" maxlength="300">${c?esc(c.msg||""):""}</textarea><div class="mut">Please don't share phone numbers or addresses. Sessions are group-first and safety-checked.</div>
+<div class="row" style="margin-top:12px"><button class="btn" id="ok1">Confirm Session</button><button class="btn alt" id="no1">Close</button></div>`);
+e.querySelector("#no1").onclick=()=>e.remove();
+e.querySelector("#ok1").onclick=()=>{const g=i=>e.querySelector(i).value,d=g("#d1"),t=g("#t1");if(!d||!t)return toast("Pick a date and time");const x={date:d,time:t,tz:g("#z1"),dur:+g("#u1"),msg:g("#m1").trim()};if(+cstart(x)<Date.now())return toast("Please choose a future time");
+if(c)Object.assign(c,x,{st:"pending"});else D.calls.push({id:"c"+Date.now(),who:b.who,topic:b.topic,src:b.src,swapId:b.swapId,st:"pending",...x});save();e.remove();toast("Request sent. Status: Pending");draw()}}
+function swCall(z){if(z.st=="done")return"";const c=D.calls.find(q=>q.swapId==z.id&&q.st!="done");return c?`<span class="pill t">📞 ${LBL[c.st]}</span> <span class="mut">${cfmt(c)}</span>`:`<button class="btn alt sm" data-a="rs:${z.id}">📞 Request a Call</button>`}
+function callCard(c){const steps=["pending","proposed","confirmed"],i=steps.indexOf(c.st);let b="";
+if(c.st=="pending")b=`<button class="btn sm" data-a="cp:${c.id}">Prototype: ${esc(c.who)} proposes a time</button><div class="mut">Prototype step. In a live version this happens when ${esc(c.who)} replies.</div>`;
+if(c.st=="proposed")b=`<button class="btn sm" data-a="ca:${c.id}">Accept time</button>`;
+if(c.st=="confirmed")b=ready(c)?`<button class="btn sm" data-a="cj:${c.id}">Join Session</button>`:`<span class="mut">Join opens 15 min before start.</span> <button class="btn alt sm" data-a="cn:${c.id}">Prototype: start now</button>`;
+return`<div class="card"><h3>${esc(c.topic)}</h3><div>${steps.map((x,k)=>`<span class="pill ${k<=i?"t":""}">${LBL[x]}</span>`).join(" → ")}</div><div class="mut" style="margin:8px 0">With <b>${esc(c.who)}</b> · ${cfmt(c)} · ${c.dur} min${c.msg?"<br>“"+esc(c.msg)+"”":""}</div><div class="row">${b}${c.st!="pending"?`<button class="btn alt sm" data-a="cr:${c.id}">Reschedule</button>`:""}<button class="btn alt sm" data-a="cx:${c.id}">Cancel</button></div></div>`}
+function upcoming(){const L=D.calls.filter(c=>c.st!="done").sort((a,b)=>cstart(a)-cstart(b));return L.length?`<div class="grid">${L.map(callCard).join("")}</div>`:`<p class="mut">No upcoming sessions. Use “Request a Call” on a mentor or on your Skill Swap sessions.</p>`}
+function completed(){const L=D.calls.filter(c=>c.st=="done");return L.length?`<div class="grid">${L.map(c=>{const n=D.notes.find(x=>x.callId==c.id);return`<div class="card"><h3>${esc(c.topic)}</h3><div class="mut">With ${esc(c.who)} · ${cfmt(c)}</div><div>${n?"✅ Notes saved":c.tr?"⚠ Notes not generated yet":"No AI notes"}</div><div class="row" style="margin-top:8px">${n?`<button class="btn sm" data-a="nv:${n.id}">Open notes</button>`:""}${c.tr?`<button class="btn sm" data-a="nr:${c.id}">Try again</button>`:""}</div></div>`}).join("")}</div>`:`<p class="mut">No completed sessions yet.</p>`}
+function learning(){return`<h2>My Learning</h2><div class="grid"><div class="card"><h3>Skills I'm Learning</h3>${pills(D.me.learn,"l")}</div><div class="card"><h3>Skills I Can Teach</h3>${pills(D.me.teach,"t")}</div></div><h2>Upcoming Sessions</h2>${upcoming()}<h2>Completed Sessions</h2>${completed()}<h2>My AI Notes</h2><p class="mut">Session notes are made only when you switch AI Notes on, and only for that session. You can delete them any time.</p>${D.notes.length?`<div class="grid">${D.notes.slice().reverse().map(n=>`<div class="card"><h3>${esc(n.title)}</h3><div class="mut">${n.date} · ${esc(n.who)}</div><p>${esc(n.summary)}</p><div class="row"><button class="btn sm" data-a="nv:${n.id}">Open</button><button class="btn alt sm" data-a="nd:${n.id}">Delete</button></div></div>`).join("")}</div>`:`<p class="mut">No saved notes yet.</p>`}`}
+function act(a){const k=a.split(":")[0],g=a.slice(k.length+1),c=D.calls.find(x=>x.id==g);
+if(k=="rc"){const[w,t]=g.split("|");return openSch({who:w,topic:t,src:"mentor"})}
+if(k=="rs"){const z=D.swaps.find(x=>x.id==g);return z&&openSch({who:z.w,topic:"Skill exchange: "+z.o.replace("30 min ","")+" ⇄ "+z.r.replace("30 min ",""),src:"swap",swapId:z.id})}
+if(PFACT(k,g))return;if(k=="cp"&&c){c.st="proposed";toast("Time proposed")}if(k=="ca"&&c){c.st="confirmed";toast("Session confirmed")}
+if(k=="cx"&&c){D.calls=D.calls.filter(x=>x!=c);toast("Session cancelled")}if(k=="cr"&&c)return openSch({id:g});
+if(k=="cn"&&c){const n=new Date();c.tz=Intl.DateTimeFormat().resolvedOptions().timeZone;c.date=n.toLocaleDateString("en-CA");c.time=n.toTimeString().slice(0,5)}
+if(k=="cj"&&c)return openVideo(g);
+if(k=="nv"){const n=D.notes.find(x=>x.id==g);if(!n)return;const e=modal(`<h2 style="margin-top:0">${esc(n.title)}</h2><div class="mut">${n.date} · ${esc(n.who)}</div>${renderNotes(n.n)}<div class="row" style="margin-top:12px"><button class="btn alt" id="x1">Close</button></div>`);return e.querySelector("#x1").onclick=()=>e.remove()}
+if(k=="nd"){if(confirm("Delete these notes permanently?")){D.notes=D.notes.filter(x=>x.id!=g);toast("Notes deleted")}}
+if(k=="nr"&&c){const w=modal("Generating your notes with AI…");makeNote(c,c.tr).catch(e=>toast(friendly(e))).finally(()=>{w.remove();draw()});return}
+save();draw()}
+/* ===== Video session page (UI only: no live video provider connected) ===== */
+const VC={};
+function openVideo(id){const c=D.calls.find(x=>x.id==id);if(!c)return;Object.assign(VC,{c,t0:Date.now(),ai:false,consent:false,tr:"",mic:true,panel:"",chat:[],notes:null,rec:null,stream:null,lastLen:0,busy:0,health:""});
+const e=document.createElement("div");e.className="vs";VC.el=e;document.body.append(e);
+e.innerHTML=`<div class="vh"><div><b>${esc(c.topic)}</b><div class="vm">With ${esc(c.who)} · ${cfmt(c)} · ${c.dur} min</div></div><div class="vt" id="vtm">00:00</div></div>
+<div class="vb">Prototype interface: no live video provider is connected, so you can't see or hear ${esc(c.who)} yet. Your camera preview and the AI Notes controls are real; the remote call is not. See the README to connect Daily, LiveKit or WebRTC.</div>
+<div class="vmain"><div class="vstage"><div class="vtile big"><div class="av big">${esc(c.who[0])}</div><b>${esc(c.who)}</b><span>Waiting for a video provider…</span></div><div class="vside"><div class="vtile" id="vself"><div class="av">${esc(D.me.n[0])}</div><span>You</span></div></div></div><div class="vpanel" id="vpn" hidden></div></div>
+<div class="vind" id="vind" hidden>🔴 AI note taker is ON. Your speech is being transcribed.</div>
+<div class="vctl"><button id="vmic">🎤 Mic</button><button id="vcam">📷 Camera</button><button id="vch">💬 Chat</button><button id="vai">✨ AI Note Taker</button><button class="end" id="vend">End Call</button></div>`;
+const q=x=>e.querySelector(x);
+VC.tm=setInterval(()=>{const t=Math.floor((Date.now()-VC.t0)/1e3),p=n=>String(n).padStart(2,"0");q("#vtm").textContent=p(t/60|0)+":"+p(t%60)},1000);
+VC.au=setInterval(()=>{if(VC.ai&&VC.tr.length-VC.lastLen>200)liveNotes()},12e4);
+q("#vmic").onclick=()=>{VC.mic=!VC.mic;q("#vmic").textContent=VC.mic?"🎤 Mic":"🔇 Muted";q("#vmic").classList.toggle("on",!VC.mic);syncRec()};
+q("#vcam").onclick=async()=>{const s=q("#vself");if(VC.stream){VC.stream.getTracks().forEach(t=>t.stop());VC.stream=null;s.innerHTML=`<div class="av">${esc(D.me.n[0])}</div><span>You</span>`;return}
+try{VC.stream=await navigator.mediaDevices.getUserMedia({video:true});const v=document.createElement("video");v.autoplay=true;v.muted=true;v.playsInline=true;v.srcObject=VC.stream;s.innerHTML="";s.append(v)}catch(x){toast("Camera isn't available or permission was denied")}};
+q("#vch").onclick=()=>{VC.panel=VC.panel=="chat"?"":"chat";vRender()};q("#vai").onclick=()=>{VC.panel=VC.panel=="ai"?"":"ai";vRender()};q("#vend").onclick=endCall;
+fetch(AI_BASE+"/api/health").then(r=>r.json()).then(h=>{VC.health=h.aiConfigured?"":"AI service not configured. Notes can't be generated until the server has an API key."}).catch(()=>{VC.health="AI service unreachable. Start the backend (see README)."}).finally(()=>{const s=document.querySelector("#vst");if(s&&!VC.busy)s.textContent=VC.health})}
+function syncRec(){const want=VC.ai&&VC.mic&&SR;if(want&&!VC.rec){const r=new SR();r.continuous=true;r.interimResults=false;r.lang=S.lang=="ur"?"ur-PK":"en-US";r.onresult=ev=>{for(let i=ev.resultIndex;i<ev.results.length;i++)if(ev.results[i].isFinal){VC.tr+=" "+ev.results[i][0].transcript;const l=document.querySelector("#vlen");if(l)l.textContent=VC.tr.length}};r.onend=()=>{if(VC.rec===r){try{r.start()}catch(x){}}};try{r.start();VC.rec=r}catch(x){}}
+if(!want&&VC.rec){const r=VC.rec;VC.rec=null;try{r.stop()}catch(x){}}}
+function vRender(){const p=VC.el.querySelector("#vpn"),q=x=>p.querySelector(x);if(!VC.panel){p.hidden=true;return}p.hidden=false;
+if(VC.panel=="chat"){p.innerHTML=`<h3>Session chat</h3><div class="mut">Prototype: messages stay on this device until a real backend or video provider is connected.</div><div class="vcm">${VC.chat.map(m=>`<div class="m me">${esc(m)}</div>`).join("")}</div><div class="cin"><input id="vci" placeholder="Type a message"><button class="btn sm" id="vcs">Send</button></div>`;
+const f=()=>{const v=q("#vci").value.trim();if(v){VC.chat.push(v);vRender()}};q("#vcs").onclick=f;q("#vci").onkeydown=ev=>{if(ev.key=="Enter")f()};return}
+p.innerHTML=`<h3>✨ AI Note Taker</h3><div class="mut">Your AI note taker follows this session and writes organized notes for you. It doesn't chat or answer questions.</div><div class="mut">AI notes are made only for this session and only while ON. Your speech is transcribed in your browser and sent as text, without names or personal details, to an AI service. No audio is recorded. Turn it off any time. You can delete saved notes in your profile.</div>
+${VC.consent&&!VC.ai?`<div class="match" style="margin:8px 0">Everyone in the session should know the AI note taker is on. Turn it on?</div><div class="row"><button class="btn sm" id="vyes">Yes, turn on</button><button class="btn alt sm" id="vno">Cancel</button></div>`:`<div class="row" style="margin:8px 0"><button class="btn sm ${VC.ai?"on":""}" id="vtg">Note taker: ${VC.ai?"ON":"OFF"}</button><button class="btn alt sm" id="vup" ${VC.ai?"":"disabled"}>Update notes now</button></div>`}
+<div class="mut">${SR?"Live speech transcription is available in this browser (your own voice only until a video provider is connected).":"Live speech transcription isn't supported in this browser. Type or paste what was discussed below."}</div>
+<label>Add to transcript</label><textarea id="vtx" rows="2" style="width:100%"></textarea><button class="btn alt sm" id="vad" ${VC.ai?"":"disabled"}>Add</button><div class="mut">Transcript: <span id="vlen">${VC.tr.length}</span> characters</div><div id="vnt">${VC.notes?renderNotes(VC.notes):""}</div><div class="mut" id="vst">${esc(VC.health)}</div>`;
+const set=v=>{VC.ai=v;VC.consent=false;VC.el.querySelector("#vind").hidden=!v;VC.el.querySelector("#vai").classList.toggle("on",v);syncRec();vRender()};
+if(q("#vtg"))q("#vtg").onclick=()=>{if(VC.ai)set(false);else{VC.consent=true;vRender()}};if(q("#vyes"))q("#vyes").onclick=()=>set(true);if(q("#vno"))q("#vno").onclick=()=>{VC.consent=false;vRender()};
+q("#vup").onclick=liveNotes;q("#vad").onclick=()=>{const t=q("#vtx").value.trim();if(t){VC.tr+=" "+t;q("#vtx").value="";q("#vlen").textContent=VC.tr.length}}}
+async function liveNotes(){if(VC.busy)return;if(VC.tr.trim().length<20){toast("Not enough transcript yet to make notes");return}VC.busy=1;VC.lastLen=VC.tr.length;const st=()=>document.querySelector("#vst");if(st())st.textContent="Asking AI to update your notes…";
+try{VC.notes=await genNotes(VC.tr,VC.c.topic);const n=document.querySelector("#vnt");if(n)n.innerHTML=renderNotes(VC.notes);if(st())st.textContent="Notes updated."}catch(e){if(st())st.textContent=friendly(e)}VC.busy=0}
+async function endCall(){const c=VC.c,ai=VC.ai,tr=VC.tr.trim();clearInterval(VC.tm);clearInterval(VC.au);VC.ai=false;syncRec();if(VC.stream)VC.stream.getTracks().forEach(t=>t.stop());VC.el.remove();
+c.st="done";const z=c.swapId&&D.swaps.find(q=>q.id==c.swapId);if(z){z.st="done";badge("🤝 First Skill Exchange")}save();callAct(c);
+if(!ai){toast("Session ended. The AI note taker was off, so no notes were made.");return go("profile")}
+if(tr.length<20){toast("Transcript unavailable, so no notes were made. Your session is still saved.");return go("profile")}
+const w=modal("Generating your notes with AI…");try{await makeNote(c,tr)}catch(e){c.tr=tr;c.noteErr=e.code;save();toast(friendly(e))}w.remove();go("profile")}
+
+/* ===== AI Portfolio Builder ===== */
+const today=()=>new Date().toLocaleDateString("en-CA"),strip=x=>String(x).replace("30 min ",""),redraw=()=>{const y=scrollY;draw();scrollTo(0,y)};
+const PFS=[{id:"professional",n:"Professional",d:"Clean and minimal",bg:"#FFFFFF",ink:"#1F2A37",acc:"#2F5D8A",f:"Inter,system-ui,sans-serif",hd:"height:6px;width:40%;background:#2F5D8A;margin-bottom:8px"},
+{id:"creative",n:"Creative",d:"Modern and colorful",bg:"#FFF6F0",ink:"#29213D",acc:"#F47C7C",f:"Fraunces,Georgia,serif",hd:"height:34px;border-radius:10px;background:linear-gradient(135deg,#F47C7C,#9B8AFB);margin-bottom:8px"},
+{id:"academic",n:"Academic",d:"Education and achievements",bg:"#FBF8F1",ink:"#2B2B2B",acc:"#7A1F2B",f:"Georgia,'Times New Roman',serif",hd:"height:2px;background:#7A1F2B;margin:6px 0 10px"},
+{id:"elegant",n:"Elegant",d:"Simple and polished",bg:"#F7F3FB",ink:"#3A2C4D",acc:"#9B8AFB",f:"Fraunces,Georgia,serif",ta:"center",hd:"height:2px;width:30%;background:#9B8AFB;margin:6px auto 10px"},
+{id:"bold",n:"Bold",d:"Highlights projects and skills",bg:"#1D1730",ink:"#F5F0FF",acc:"#F6D77A",f:"Inter,system-ui,sans-serif",hd:"height:26px;background:#F6D77A;margin-bottom:8px"}];
+const KINDS=["Project","Achievement","Certificate","Skill","Experience","Image","Link"];
+const secOf=i=>({exchange:"Learning",session:"Learning",learningpath:"Learning",project:"Projects",mentorship:"Experience",community:"Experience",achievement:"Achievements",event:"Events & Activities"}[i.type]||({Project:"Projects",Achievement:"Achievements",Certificate:"Achievements",Skill:"Skills",Experience:"Experience",Image:"Gallery",Link:"Contact / Links"}[i.facts.kind]||"Projects"));
+const iTitle=i=>{if(i.eTitle)return i.eTitle;if(i.ai&&i.ai.title)return i.ai.title;const f=i.facts;return({exchange:f.learned+" skill exchange",mentorship:"Mentorship: "+f.topic,learningpath:f.path,achievement:f.badge,community:f.name}[i.type])||f.title};
+const iText=i=>{if(i.eText)return i.eText;if(i.ai&&i.ai.text)return i.ai.text;const f=i.facts;return({exchange:`Completed a skill exchange: taught ${f.taught}, learned ${f.learned}.`,project:`${f.status} project. Role: ${f.role}.${f.outcome?" Outcome: "+f.outcome:""}`,mentorship:`Completed a mentorship session on ${f.topic}.`,session:`Completed the learning session "${f.title}".`,learningpath:`Completed the ${f.path} learning path.`,achievement:`Earned the "${f.badge}" badge.`,event:`Took part in ${f.title}.`,community:`Joined the ${f.name} community.`}[i.type])||f.description||""};
+let QUIET=0;
+function pfNote(inc){if(QUIET)return;const e=toast(inc?"✨ Your portfolio has been updated! Tap to review":"New activity is waiting for your approval in Portfolio");e.style.cursor="pointer";e.onclick=()=>go("portfolio")}
+function addAct(key,type,facts,date,source){const P=D.pf;if(P.items.some(i=>i.key==key)||P.removed.includes(key))return;const it={id:"p"+Date.now()+Math.random().toString(36).slice(2,6),key,type,facts,date:date||today(),source,inc:P.auto,new:true,ai:null};P.items.push(it);save();if(P.style){pfNote(it.inc);if(it.inc)queueGen(it.id)}}
+function updAct(key,patch,date){const i=D.pf.items.find(x=>x.key==key);if(!i)return;Object.assign(i.facts,patch);if(date)i.date=date;i.ai=null;i.err=0;i.new=true;save();if(D.pf.style&&i.inc){pfNote(true);queueGen(i.id)}}
+function rmAct(key){D.pf.items=D.pf.items.filter(i=>i.key!=key);save()}
+const swapAct=z=>addAct("ex:"+z.id,"exchange",{taught:strip(z.o),learned:strip(z.r),partner:z.w},null,"Completed skill exchange");
+function callAct(c){if(c.src=="mentor")addAct("ms:"+c.id,"mentorship",{topic:c.topic.replace("Mentorship: ",""),mentor:c.who,durationMin:c.dur},c.date,"Completed video session");else if(!c.swapId)addAct("ses:"+c.id,"session",{title:c.topic,teacher:c.who,durationMin:c.dur},c.date,"Completed video session");else{const z=D.swaps.find(q=>q.id==c.swapId);if(z)swapAct(z)}}
+function projAct(id){const p=PROJ.find(x=>x.id==id),d=D.pdone[id];addAct("pr:"+id,"project",{title:p.n,problem:p.p,skillsNeeded:p.need,role:d?d.role:"Team member",status:d?"Completed":"Current"},null,"Joined project")}
+function sessAct(id){const s=[...SESS,...D.sessions].find(x=>x.id==id);if(s)addAct("sd:"+id,"session",{title:s.t,teacher:s.by,durationMin:s.d},null,"Marked complete by you")}
+function evAct(t){const e=EVENTS.find(x=>x[0]==t);addAct("ev:"+t,"event",{title:t,day:e?e[1]:"",format:e?e[2]:""},null,"Marked attended by you")}
+function pathAct(k){addAct("lp:"+k,"learningpath",{path:k.replace(/^\S+\s/,""),steps:PATHS[k]?PATHS[k].length:0},null,"Marked complete by you")}
+function completeProj(id,role,outcome){if(!D.joined.includes(id))D.joined.push(id);projAct(id);D.pdone[id]={role,outcome,date:today()};badge("💡 Project Contributor");updAct("pr:"+id,{status:"Completed",role,outcome:outcome||undefined},today());const i=D.pf.items.find(x=>x.key=="pr:"+id);if(i)i.source="Marked complete by you";save()}
+function syncPF(){D.swaps.filter(z=>z.st=="done").forEach(swapAct);D.joined.forEach(projAct);D.calls.filter(c=>c.st=="done").forEach(callAct);D.badges.forEach(b=>addAct("bd:"+b,"achievement",{badge:b},null,"Earned in She Connects"));(D.c||[]).forEach(n=>addAct("cm:"+n,"community",{name:n},null,"Joined community"));D.sdone.forEach(sessAct);Object.entries(D.ev).forEach(([t,v])=>v=="att"&&evAct(t));D.pathsDone.forEach(pathAct)}
+function initPF(){const P=D.pf;if(D.port&&!P.mig){D.port.forEach((p,i)=>P.items.push({id:"pm"+i,key:"mg:"+i,type:"manual",facts:{kind:"Project",title:p.t,description:""},date:today(),source:"Added by you",inc:true,manual:true,new:false,ai:null}));P.mig=1}QUIET=1;syncPF();QUIET=0;save()}
+/* AI calls go to the backend: POST /api/generate-portfolio (the API key stays on the server) */
+async function pfAI(payload){let r;try{r=await fetch(AI_BASE+"/api/generate-portfolio",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})}catch(e){throw new AIErr("network")}if(r.status==503)throw new AIErr("config");if(!r.ok)throw new AIErr("failed");try{return await r.json()}catch(e){throw new AIErr("failed")}}
+const pfMsg=e=>e&&e.code=="config"?"AI service not configured. Your verified activities are still shown.":e&&e.code=="network"?"Couldn't reach the AI service. Your verified activities are still shown.":"AI descriptions couldn't be generated right now. Your verified activities are still shown.";
+const PQ=new Set();let PT=0;const queueGen=id=>{PQ.add(id);clearTimeout(PT);PT=setTimeout(runGen,800)};
+const aiF=f=>{const o={...f};["partner","mentor","teacher","url"].forEach(k=>delete o[k]);return o},prof=()=>({interests:D.me.int,teach:D.me.teach,learn:D.me.learn});
+async function runGen(){const ids=[...PQ].slice(0,10);ids.forEach(x=>PQ.delete(x));const L=D.pf.items.filter(i=>ids.includes(i.id));if(!L.length)return;
+try{const r=await pfAI({mode:"items",items:L.map(i=>({id:i.id,type:i.type,facts:aiF(i.facts)})),profile:prof()});(r.items||[]).forEach(a=>{const i=L.find(x=>x.id==a.id);if(i&&a.title&&a.description){i.ai={title:String(a.title).slice(0,80),text:String(a.description).slice(0,400)};i.err=0}});L.forEach(i=>{if(!i.ai)i.err="failed"})}catch(e){L.forEach(i=>i.err=e.code||"failed");toast(pfMsg(e))}
+save();if(PQ.size)queueGen([...PQ][0]);else maybeIntro();if(S.v=="portfolio"&&!document.querySelector(".cmod"))redraw()}
+async function maybeIntro(force){const P=D.pf,L=P.items.filter(i=>i.inc&&!i.hidden);if(!P.style||(L.length<2&&!force))return;const n=L.length;if(!force&&P.intro&&(P.intro.edited||n-P.intro.n<2))return;
+try{const r=await pfAI({mode:"intro",items:L.slice(-12).map(i=>({id:i.id,type:i.type,facts:aiF(i.facts)})),profile:prof()});if(r.intro){P.intro={text:String(r.intro).slice(0,600),edited:false,n};save();if(S.v=="portfolio")redraw()}}catch(e){if(force)toast(pfMsg(e))}}
+function pickStyle(id){D.pf.style=id;D.pf.chg=false;syncPF();D.pf.items.filter(i=>i.inc&&!i.ai&&!i.manual).forEach(i=>queueGen(i.id));save();toast("Portfolio style saved");if(!PQ.size)maybeIntro();go("portfolio")}
+function pfProg(){const L=D.pf.items.filter(i=>i.inc&&!i.hidden),has=t=>L.some(i=>i.type==t),I=D.pf.intro,T=[[15,I&&I.text,"Complete a couple of activities so AI can write your introduction."],[10,D.me.teach.length,"Add a skill you can teach."],[10,D.me.learn.length,"Add a skill you want to learn."],[15,has("exchange"),"Complete a skill exchange to strengthen your Learning section."],[15,L.some(i=>i.type=="project"||i.facts.kind=="Project"),"Add a project to showcase your skills."],[10,has("session")||has("learningpath")||has("mentorship"),"Complete a learning session or learning path."],[10,has("achievement"),"Earn a badge to add an achievement."],[5,has("event")||has("community"),"Join a community or attend an event."],[10,L.some(i=>i.facts.kind=="Link"),"Add a link so people can find your work."]];return{pct:T.reduce((a,t)=>a+(t[1]?t[0]:0),0),tips:T.filter(t=>!t[1]).map(t=>t[2]).slice(0,3)}}
+function chooser(){const P=D.pf;return`<h2>Choose Your Portfolio Style</h2><p class="mut">Pick one design. She Connects fills it in automatically from what you complete, and you can change the style any time in Portfolio Settings.</p><div class="grid">${PFS.map(x=>`<div class="card" data-a="ps:${x.id}" style="cursor:pointer"><div class="pvw" style="background:${x.bg};color:${x.ink};font-family:${x.f};text-align:${x.ta||"left"}"><div style="${x.hd}"></div><b>${esc(D.me.n)}</b><div class="pvl" style="background:${x.acc};${x.ta?"margin:6px auto":""}"></div><div class="pvl s" style="background:${x.ink};${x.ta?"margin:6px auto":""}"></div><div class="pvb"><i style="border-color:${x.acc}"></i><i style="border-color:${x.acc}"></i><i style="border-color:${x.acc}"></i></div></div><h3>${x.n}</h3><div class="mut">${x.d}</div><button class="btn sm" style="margin-top:8px">Use this style</button></div>`).join("")}</div>${P.style?`<div class="row" style="margin-top:12px"><button class="btn alt" data-a="pcx">Cancel</button></div>`:""}`}
+function itemCard(i,own){const f=i.facts,u=f.url&&/^https:\/\//.test(f.url)?f.url:"";const meta=i.manual?"Added by you":`✔ Verified: ${esc(i.source)} · ${i.date}${f.partner?" · with "+esc(f.partner):""}${f.mentor?" · mentor "+esc(f.mentor):""}${f.teacher?" · "+esc(f.teacher):""}`;
+const tag=i.eText?"✎ Edited by you":i.ai?"✨ AI-written":i.err?"AI unavailable, showing verified summary":i.manual?"":"✨ AI description pending";
+return`<div class="pi ${i.hidden?"hid":""}"><div class="pt">${esc(iTitle(i))}${i.new&&own?' <span class="pill">NEW</span>':""}${i.hidden?' <span class="pill">Hidden</span>':""}</div>${f.kind=="Image"&&u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">`:""}<p>${esc(iText(i))}</p>${i.type=="project"?`<div class="pv">Role: ${esc(f.role)} · Skills the project needs: ${f.skillsNeeded.map(esc).join(", ")}</div>`:""}${i.facts.topicsFromSessionNotes?`<div class="pv">Topics from your session notes: ${f.topicsFromSessionNotes.map(esc).join(", ")}</div>`:""}${u&&f.kind!="Image"?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>`:""}<div class="pv">${meta}${tag?" · "+tag:""}</div>${own?`<div class="row" style="margin-top:6px"><button class="btn alt sm" data-a="pe:${i.id}">Edit</button><button class="btn alt sm" data-a="ph:${i.id}">${i.hidden?"Show":"Hide"}</button><button class="btn alt sm" data-a="pd:${i.id}">Delete</button><button class="btn alt sm" data-a="pg:${i.id}">✨ Regenerate with AI</button></div>`:""}</div>`}
+function pfView(){const P=D.pf;if(!P.style||P.chg)return chooser();const own=!S.pub,L=P.items.filter(i=>i.inc&&(own||!i.hidden)),pend=P.items.filter(i=>!i.inc),fresh=L.filter(i=>i.new).length,pr=pfProg(),st=PFS.find(x=>x.id==P.style),sec=n=>L.filter(i=>secOf(i)==n),C=a=>a.map(i=>itemCard(i,own)).join(""),B=(n,b)=>b?`<div class="ps"><h3>${n}</h3>${b}</div>`:"";
+const dev=[...new Set(L.filter(i=>i.type=="exchange"&&!i.hidden).map(i=>i.facts.learned))],I=P.intro;
+const intro=I&&I.text?`<p class="pintro">${esc(I.text)}</p><div class="pv">${I.edited?"✎ Edited by you":"✨ AI-written from your verified activities"}</div>`:`<p class="mut">${L.length<2?"Your introduction will be written by AI once you have a couple of completed activities.":"No introduction yet."}</p>`;
+const prj=sec("Projects"),cur=prj.filter(i=>i.facts.status=="Current"),dn=prj.filter(i=>i.facts.status!="Current");
+return`<h2>My Portfolio</h2>${own&&fresh?`<div class="match" style="margin-bottom:10px">✨ Your portfolio has been updated! ${fresh} new item${fresh>1?"s":""} to review. <button class="btn sm" data-a="pr:all">Mark reviewed</button></div>`:""}
+<div class="row"><button class="btn alt sm" data-a="pset">⚙ Portfolio Settings</button><button class="btn sm ${S.pub?"on":"alt"}" data-a="ppub">${S.pub?"Viewing as visitor":"View as visitor"}</button></div>
+${S.ps&&own?`<div class="card" style="margin-top:10px"><b>Portfolio Settings</b><div class="row" style="margin-top:8px"><button class="btn alt sm" data-a="pchg">Change style (${st.n})</button><button class="btn sm ${P.auto?"on":"alt"}" data-a="pauto">Automatically add completed activities: ${P.auto?"ON":"OFF"}</button><button class="btn alt sm" data-a="pir">✨ Regenerate introduction</button></div><div class="mut">AI only uses activities you actually completed. Names of other people are not sent to the AI.</div></div>`:""}
+${own?`<div class="card" style="margin-top:10px"><b>Your Portfolio: ${pr.pct}% complete</b><div class="bar" style="margin:6px 0"><i style="width:${pr.pct}%"></i></div>${pr.tips.map(t=>`<div class="mut">💡 ${t}</div>`).join("")||'<div class="mut">Nicely done! Keep learning and your portfolio will keep growing.</div>'}<div class="mut">Just a guide for you, never a ranking.</div></div>`:""}
+${own&&pend.length?`<h2>Waiting for your approval</h2>${pend.map(i=>`<div class="card"><h3>${esc(iTitle(i))}</h3><div class="mut">${esc(iText(i))}</div><div class="row" style="margin-top:8px"><button class="btn sm" data-a="pa:${i.id}">Add to portfolio</button><button class="btn alt sm" data-a="pdm:${i.id}">Dismiss</button></div></div>`).join("")}`:""}
+<div class="pf s-${P.style}" style="--pb:${st.bg};--pi:${st.ink};--pa:${st.acc};--pf:${st.f}"><div class="phd"><h1>${esc(D.me.n)}</h1><div class="psub">Student portfolio · She Connects</div>${intro}${own?`<div class="row"><button class="btn alt sm" data-a="pin">Edit introduction</button></div>`:""}${D.me.int.length?`<div style="margin-top:8px">${pills(D.me.int)}</div>`:""}</div>
+${B("Skills",`<div class="pk"><b>Skills I teach</b><div>${pills(D.me.teach,"t")}</div></div><div class="pk"><b>Skills I'm learning</b><div>${pills(D.me.learn,"l")}</div></div>${dev.length?`<div class="pk"><b>Skills developed through completed exchanges</b><div>${pills(dev)}</div></div>`:""}${C(sec("Skills"))}`)}
+${B("Projects",(cur.length?`<b>Current projects</b>${C(cur)}`:"")+(dn.length?`<b>Completed projects</b>${C(dn)}`:""))}${B("Learning & Development",C(sec("Learning")))}${B("Experience",C(sec("Experience")))}${B("Achievements",C(sec("Achievements")))}${B("Events & Activities",C(sec("Events & Activities")))}${B("Gallery",C(sec("Gallery")))}${B("Contact / Links",C(sec("Contact / Links")))}</div>
+${own?`<div class="card" style="margin-top:14px"><b>Add to my portfolio</b><div class="mut">Please don't add phone numbers or home addresses.</div><div class="row" style="margin-top:8px"><select id="mk">${KINDS.map(k=>`<option>${k}</option>`).join("")}</select><input id="mt" placeholder="Title"><input id="mu" placeholder="https:// link or image URL (optional)"></div><textarea id="md" rows="2" style="width:100%;margin-top:8px" placeholder="Description (optional)" maxlength="400"></textarea><button class="btn" data-a="madd" style="margin-top:8px">Add</button></div>${certCard()}`:""}`}
+function PFACT(k,g){const P=D.pf,it=()=>P.items.find(x=>x.id==g),R=()=>{save();redraw()};
+if(k=="ps"){pickStyle(g);return 1}if(k=="pcx"){P.chg=false;R();return 1}if(k=="pchg"){P.chg=true;R();return 1}if(k=="pset"){S.ps=!S.ps;redraw();return 1}if(k=="ppub"){S.pub=!S.pub;redraw();return 1}
+if(k=="pauto"){P.auto=!P.auto;R();return 1}if(k=="pr"){P.items.forEach(i=>i.new=false);R();return 1}
+if(k=="ph"){const i=it();i.hidden=!i.hidden;R();return 1}
+if(k=="pd"){if(confirm("Delete this from your portfolio?")){const i=it();if(!i.manual&&!P.removed.includes(i.key))P.removed.push(i.key);P.items=P.items.filter(x=>x!=i);R()}return 1}
+if(k=="pg"){const i=it();i.eTitle=i.eText="";i.ai=null;i.err=0;save();toast("Regenerating with AI…");queueGen(i.id);redraw();return 1}
+if(k=="pa"){const i=it();i.inc=true;i.new=true;save();queueGen(i.id);redraw();return 1}
+if(k=="pdm"){const i=it();if(!i.manual&&!P.removed.includes(i.key))P.removed.push(i.key);P.items=P.items.filter(x=>x!=i);R();return 1}
+if(k=="pir"){toast("Writing your introduction with AI…");maybeIntro(true);return 1}
+if(k=="pe"){const i=it(),e=modal(`<h2 style="margin-top:0">Edit</h2><label>Title</label><input id="e1" value="${esc(iTitle(i))}" style="width:100%"><label>Description</label><textarea id="e2" rows="5" style="width:100%">${esc(iText(i))}</textarea><div class="row" style="margin-top:12px"><button class="btn" id="e3">Save</button><button class="btn alt" id="e4">Cancel</button></div>`);e.querySelector("#e4").onclick=()=>e.remove();e.querySelector("#e3").onclick=()=>{i.eTitle=e.querySelector("#e1").value.trim();i.eText=e.querySelector("#e2").value.trim();save();e.remove();redraw()};return 1}
+if(k=="pin"){const e=modal(`<h2 style="margin-top:0">Edit introduction</h2><textarea id="e2" rows="6" style="width:100%" maxlength="600">${esc(P.intro?P.intro.text:"")}</textarea><div class="mut">Keep it true to what you've done. AI won't overwrite it unless you ask.</div><div class="row" style="margin-top:12px"><button class="btn" id="e3">Save</button><button class="btn alt" id="e4">Cancel</button></div>`);e.querySelector("#e4").onclick=()=>e.remove();e.querySelector("#e3").onclick=()=>{const t=e.querySelector("#e2").value.trim();P.intro=t?{text:t,edited:true,n:P.items.filter(i=>i.inc).length}:null;save();e.remove();redraw()};return 1}
+if(k=="madd"){const q=x=>document.querySelector(x).value.trim(),kind=q("#mk"),title=q("#mt"),url=q("#mu");if(!title)return toast("Add a title"),1;if(url&&!/^https:\/\//.test(url))return toast("Links must start with https://"),1;if((kind=="Image"||kind=="Link")&&!url)return toast("This type needs a link"),1;
+P.items.push({id:"pm"+Date.now(),key:"mn:"+Date.now(),type:"manual",facts:{kind,title,description:q("#md"),url},date:today(),source:"Added by you",inc:true,manual:true,new:true,ai:null});R();return 1}
+if(k=="pc"){const p=PROJ.find(x=>x.id==+g),e=modal(`<h2 style="margin-top:0">Complete: ${esc(p.n)}</h2><label>Your role</label><input id="r1" value="Team member" style="width:100%"><label>Project outcome (optional, only what really happened)</label><textarea id="r2" rows="3" style="width:100%" maxlength="300"></textarea><div class="row" style="margin-top:12px"><button class="btn" id="r3">Mark complete</button><button class="btn alt" id="r4">Cancel</button></div>`);e.querySelector("#r4").onclick=()=>e.remove();e.querySelector("#r3").onclick=()=>{completeProj(+g,e.querySelector("#r1").value.trim()||"Team member",e.querySelector("#r2").value.trim());e.remove();redraw()};return 1}
+if(k=="sd"){if(!D.sdone.includes(g)){D.sdone.push(g);sessAct(g);badge("🌱 First Skill Learned")}R();return 1}
+if(k=="lp"){if(!D.pathsDone.includes(g)){D.pathsDone.push(g);pathAct(g);badge("🎓 Completed Path")}R();return 1}
+if(k=="ev"){if(D.ev[g]=="att")return 1;if(D.ev[g]=="rsvp"){D.ev[g]="att";evAct(g);toast("Marked as attended")}else{D.ev[g]="rsvp";toast("RSVP saved")}R();return 1}
+return 0}
+const V={
+home(){const rec=USERS.map(u=>({u,m:score(u)})).sort((a,b)=>b.m.s-a.m.s)[0];
+return`<div class="hero"><div class="eyebrow sans">SHE CONNECTS · Learn. Share. Connect. Grow.</div><h1>${t("h1").split(/(?<=[.۔])\s*/).filter(Boolean).map((w,i)=>`<span class="hw">${w}<i class="ill">${ILL[["learn","teach","connect"][i]||"connect"]}</i></span>`).join(" ")}</h1><p style="font-size:20px;max-width:520px">${t("sub")}</p>
+<div class="row"><button class="btn" data-v="explore">${t("b1")}</button><button class="btn alt" style="color:#fff;border-color:#fff" data-v="profile">${t("b2")}</button></div>
+<div class="hstats"><div><b>10+</b><span>skills to learn</span></div><div><b>100%</b><span>free</span></div><div><b>0</b><span>rankings</span></div></div><svg viewBox="0 0 400 80" preserveAspectRatio="none"><path d="M0 80V40L50 10 90 38 140 0 190 34 240 8 290 42 340 12 400 36V80Z" style="fill:var(--bg);opacity:.35"/><path d="M0 80V52L40 28 70 46 120 12 170 42 210 24 260 56 310 20 360 48 400 34V80Z" style="fill:var(--bg)"/></svg></div>
+<h2>Welcome to She Connects</h2>
+<div class="card"><p style="font-size:18px;margin-top:0"><b>She Connects</b> is a free community platform where girls and young women <b>teach what they know, learn what they want, and build projects together</b>, with no money needed.</p>
+<p>Many girls in Chitral have real talent but few chances to find mentors, courses or teammates. She Connects brings them together, safely: group sessions, no open private chat, and you choose what others can see.</p></div>
+<div class="grid" style="margin-top:16px">
+<div class="card"><h3>👩‍🎓 Who is it for?</h3>School girls, college and university students, young women, complete beginners, and anyone ready to teach or mentor.</div>
+<div class="card"><h3>🌱 What can you do?</h3>Swap skills, join sessions, form project teams, find mentors, discover free opportunities and build a portfolio.</div>
+<div class="card"><h3>🛡️ Is it safe?</h3>Yes, by design. No phone numbers or addresses shown, report and block tools, and supervised groups for younger users.</div></div>
+<h2>How it works</h2><div class="grid">
+<div class="card"><div class="stat" style="border:0;box-shadow:none;padding:0"><b>1</b></div><h3>Create your profile</h3>Add what you can teach and what you want to learn.</div>
+<div class="card"><div class="stat" style="border:0;box-shadow:none;padding:0"><b>2</b></div><h3>Match and swap</h3>We find girls whose skills fit yours. Propose a swap or join a session.</div>
+<div class="card"><div class="stat" style="border:0;box-shadow:none;padding:0"><b>3</b></div><h3>Grow together</h3>Join projects, earn badges, build your portfolio and a one-year certificate.</div></div>
+<div class="pat"></div><div class="quote">Talent exists everywhere. Opportunity doesn't.<div class="sans mut" style="font:400 16px system-ui;margin-top:6px">She Connects helps girls turn knowledge into opportunity by teaching, learning and building together.</div></div>
+<div class="chain">${["Coding","Graphic Design","Languages","Art","Business","Photography","Public Speaking","Sewing","Music","Mathematics"].map(x=>`<span class="pill">${x}</span>`).join(" → ")}</div>
+<p class="mut"><i>No expensive courses. No competition. Just girls helping girls grow.</i></p>
+<h2>Good morning, ${D.me.n} 👋</h2><div class="stats">
+<div class="stat"><b>35%</b><span>Python learning<div class="bar" style="margin-top:6px"><i style="width:35%"></i></div></span></div>
+<div class="stat"><b>${D.me.teach.length}</b><span>skills you teach</span></div>
+<div class="stat"><b>${USERS.filter(u=>score(u).perfect).length}</b><span>possible skill exchanges</span></div>
+<div class="stat"><b>${D.joined.length}</b><span>${D.joined.length?"project joined":"projects joined"} · Magazine active</span></div>
+<div class="stat"><b>${D.swaps.filter(z=>z.st!="done").length}</b><span>swap sessions upcoming</span></div></div>
+<h2>Upcoming Sessions</h2>${upcoming()}<h2>Recommended for you</h2><div class="grid"><div class="card"><b>Learn:</b> Python Basics</div><div class="card"><b>Teach:</b> Canva</div><div class="card"><b>Join:</b> Girls in Film</div><div class="card"><b>Opportunity:</b> Youth Filmmaking Competition</div><div class="card"><b>Best match:</b> ${rec.u.n} (${rec.m.s}%)</div></div>
+<h2>Weekly challenges</h2><div class="grid">${CHAL.map(c=>`<div class="card">${c}<div class="mut">Submit to the community gallery · no scores, only Featured picks</div></div>`).join("")}</div>
+<h2>🌄 Made in Chitral</h2><div class="card">Girls' projects, crafts, photography, films and languages documenting our valley. Join the <a href="#" data-v="projects">Magazine project</a> to contribute.</div>
+<h2>🛡️ Safety Center</h2><div class="card">Report or block anyone, hide profile details, and read the guidelines. We never show phone numbers or home addresses. No private messaging for minors — group sessions only. No swipe or dating features. AI session notes are optional, only run when you switch them on, and you can delete them anytime. <div class="row" style="margin-top:8px"><button class="btn alt sm" data-v="profile">Privacy settings</button><button class="btn alt sm" data-t="Guidelines: be kind, share only what you want, meet in groups, tell a trusted adult.">Guidelines</button></div></div>`},
+explore(){let us=USERS.filter(u=>(!S.cat||1)&&(!S.q||(u.teach.join()+u.n).toLowerCase().includes(S.q.toLowerCase())));
+const sk=[...new Set(USERS.flatMap(u=>u.teach))];
+return`<h2>Explore Skills</h2><input id="q" placeholder="Search Python, Canva, English speaking…" value="${S.q}" style="width:100%"><div style="margin:10px 0">${CATS.map(c=>`<span class="cat" data-q="${c[1]}">${c[0]} ${c[1]}</span>`).join("")}</div>
+<div class="mut">Popular: ${sk.map(s=>`<a href="#" data-q="${s}">${s}</a>`).join(" · ")}</div><h3>${us.length} girls willing to teach${S.q?` "${S.q}"`:""}</h3><div class="grid">${us.map(card).join("")||"<p>No results — try another word, or add the skill you'd like to learn.</p>"}</div>
+${sessions()}<h2>Learning paths</h2><div class="grid">${Object.entries(PATHS).map(([k,v])=>`<div class="card"><h3>${k}</h3>${v.map((s,i)=>`<div>Step ${i+1} → ${s}</div>`).join("")}<div class="mut">Free resources only</div>${D.pathsDone.includes(k)?'<span class="pill t">✓ Completed</span>':`<button class="btn alt sm" data-a="lp:${k}">Mark path completed</button>`}</div>`).join("")}</div>`},
+swap(){const ms=USERS.map(u=>({u,m:score(u)})).sort((a,b)=>b.m.s-a.m.s);
+return`<h2>🔄 Skill Swap</h2><p class="mut">“I teach you Canva for 30 minutes, you teach me Python for 30 minutes.”</p>
+<div class="card"><b>Create a swap offer</b><label>Offer</label><select id="so">${D.me.teach.map(x=>`<option>30 min ${x}</option>`)}</select><label>Request</label><select id="sr">${D.me.learn.map(x=>`<option>30 min ${x}</option>`)}</select><label>With</label><select id="sw">${USERS.map(u=>`<option>${u.n}</option>`)}</select><label>When</label><div class="row"><select id="sdy2">${DAYS.map(x=>`<option>${x}</option>`).join("")}</select><select id="stm">${TIMES.map(x=>`<option>${x}</option>`).join("")}</select><select id="sfm">${FMTS.map(x=>`<option>${x}</option>`).join("")}</select></div><button class="btn" id="sgo" style="margin-top:10px">Propose Swap</button></div>
+${mySessions()}<h2>Best matches</h2><div class="grid">${ms.map(x=>card(x.u)).join("")}</div>`},
+projects(){return`<h2>Community Projects</h2><div class="grid">${PROJ.map(p=>{const j=D.joined.includes(p.id);return`<div class="card"><h3>${p.i} ${p.n}</h3><div class="mut">${p.p}</div><div>Looking for: ${pills(p.need)}</div><div class="mut">${p.m+(j?1:0)} members · ${p.st}</div>${D.pdone[p.id]?'<span class="pill t">✓ Completed</span>':`<button class="btn sm ${j?'on':''}" data-j="${p.id}">${j?"✓ Joined":"Join Project"}</button>`} ${j&&!D.pdone[p.id]?`<button class="btn alt sm" data-a="pc:${p.id}">Mark project complete</button>`:""}</div>`}).join("")}</div>`},
+mentor(){return`<h2>Mentorship</h2><div class="match" style="display:inline-block">👩‍🏫 Mentors are women aged 18 and over</div><p class="mut">Structured requests and group sessions — no open private chat. For under-18s, a parent, teacher or school adult is looped in.</p><div class="grid">${MENT.map(m=>`<div class="card"><h3>${m[0]}</h3><span class="pill">Mentor · 18+</span><div>${m[1]}</div><button class="btn sm" data-t="Request sent. A group session will be arranged with a supervisor.">Request Mentorship</button> <button class="btn alt sm" data-a="rc:${m[1].split(",")[0]}|Mentorship: ${m[0]}">Request a Call</button></div>`).join("")}</div><div class="card" style="margin-top:12px"><b>Want to be a mentor?</b> <span class="mut">You must be 18 or older.</span><div class="row" style="margin-top:8px"><input id="ma" type="number" min="1" max="99" placeholder="Your age" style="width:120px"><button class="btn sm" id="mv">Volunteer as mentor</button></div><div class="mut">Girls under 18 are welcome to learn from mentors, join sessions and swap skills as students.</div></div>`},
+opps(){const F=S.f,today="2026-10-01",soon="2026-10-31";
+const L=OPP.filter(o=>(!F.free||o.cost=="Free")&&(!F.on||o.on)&&(!F.pk||o.loc=="Pakistan")&&(!F.intl||o.loc=="International")&&(!F.soon||o.d<=soon));
+return`<h2>🌟 Opportunities</h2><div class="row">${[["free","Free"],["on","Online"],["pk","Pakistan"],["intl","International"],["soon","Deadline soon"]].map(([k,l])=>`<button class="btn sm ${F[k]?'on':'alt'}" data-f="${k}">${l}</button>`).join("")}</div><div class="grid" style="margin-top:12px">${L.map(o=>`<div class="card"><h3>${o.n}</h3><span class="pill">${o.ty}</span><div class="mut">Deadline ${o.d} · ${o.loc} · ${o.cost} · ${o.on?"Online":"Offline"}<br>Eligibility: ${o.el}<br>Skills: ${o.sk}</div><button class="btn sm" data-t="Opens the official application page (demo link).">Official link</button></div>`).join("")||"<p>No matches.</p>"}</div><p class="mut">Always verify details on the official site.</p>`},
+comm(){return`<h2>Find Your People</h2><div class="grid">${COMM.map(c=>`<div class="card"><h3>${c[0]} ${c[1]}</h3><div class="mut">${c[2]} members · posts, projects, events, resources</div><button class="btn sm ${D.c?.includes(c[1])?'on':''}" data-c="${c[1]}">${D.c?.includes(c[1])?"✓ Joined":"Join"}</button></div>`).join("")}</div>`},
+events(){const F=S.f;const L=EVENTS.filter(e=>(!F.today||e[1]=="Today")&&(!F.on||e[2]=="Online")&&(!F.inp||e[2]=="In-person"));
+return`<h2>📅 Community Calendar</h2><div class="row">${[["today","Today"],["on","Online"],["inp","In-person"]].map(([k,l])=>`<button class="btn sm ${F[k]?'on':'alt'}" data-f="${k}">${l}</button>`).join("")}</div><div class="grid" style="margin-top:12px">${L.map(e=>`<div class="card"><h3>${e[0]}</h3>${e[1]} · ${e[2]} · Free<br><button class="btn sm ${D.ev[e[0]]=="att"?"on":""}" data-a="ev:${e[0]}">${D.ev[e[0]]=="att"?"✓ Attended":D.ev[e[0]]=="rsvp"?"Mark attended":"RSVP"}</button></div>`).join("")}</div>`},
+portfolio(){return pfView()},
+profile(){const m=D.me;return`${learning()}<h2>My Profile</h2><div class="card"><label>Display name</label><input id="pn" value="${m.n}"><label>Education</label><input id="pg" value="${m.g}"><label>Area</label><input id="pa" value="${m.a}"> <label class="sans"><input type="checkbox" id="ph" ${m.hide?.a?"checked":""}> Hide my area from others</label>
+<label>Can teach (comma separated)</label><input id="pt1" value="${m.teach.join(", ")}" style="width:100%"><label>Want to learn</label><input id="pl" value="${m.learn.join(", ")}" style="width:100%"><label>Interests</label><input id="pi" value="${m.int.join(", ")}" style="width:100%"><label>Availability</label><input id="pv" value="${m.av.join(", ")}"><br><button class="btn" id="psave" style="margin-top:10px">Save profile</button></div>
+<div class="card" style="margin-top:12px"><b>+ Add a Skill</b><div class="row"><input id="ns" placeholder="Skill, e.g. Excel"><select id="nl"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><select id="nf"><option>Free</option><option>Swap</option></select><input id="nm" type="number" value="5" style="width:80px"><button class="btn" id="nadd">Add</button></div></div>
+<div class="card" style="margin-top:12px"><b>🛡️ Privacy & safety</b><br>Only your display name and chosen details are shown. <button class="btn alt sm" data-t="Blocked users list is empty">Block list</button> <button class="btn alt sm" id="rst">Reset demo</button></div>`}};
+const sp=s=>s.split(",").map(x=>x.trim()).filter(Boolean);
+function draw(){document.body.classList.toggle("low",S.low);document.documentElement.dir=S.lang=="ur"?"rtl":"ltr";$("#lowB").classList.toggle("on",S.low);$("#exL").textContent=t("ex");nav();$("#app").innerHTML=V[S.v]();document.title="She Connects"+(S.v!="home"?" · "+t(S.v):"");
+document.querySelectorAll("#app .card h3").forEach(h=>h.insertAdjacentHTML("beforeend",`<i class="ill">${ILL[IK[S.v]||"connect"]}</i>`));$("#lang").value=S.lang;window.scrollTo(0,0)}
+const go=v=>{S.v=v;S.f={};draw()};
+function doSwap(w,o,r,day,time,fmt){D.swaps.push({id:"w"+Date.now(),w,o:o||"30 min "+D.me.teach[0],r:r||"30 min "+D.me.learn[0],st:"pending",day:day||"Saturday",time:time||"Afternoon",fmt:fmt||"Online"});save();toast("Swap proposed to "+w+" — see My Sessions")}
+document.addEventListener("click",e=>{const x=e.target.closest("[data-v],[data-q],[data-swap],[data-a],[data-j],[data-js],[data-sa],[data-sx],[data-sc],[data-f],[data-c],[data-t],[data-rep],#sgo,#mv,#scr,#cert,#cprev,#pgo,#psave,#nadd,#rst,#lowB,#demoB");if(!x)return;e.preventDefault();const d=x.dataset;
+if(d.a)return act(d.a);if(d.v)return go(d.v);if(d.q!==undefined){S.q=d.q;S.v="explore";return draw()}
+if(d.swap){const u=USERS.find(z=>z.n==d.swap),a=ci(D.me.learn,u.teach)[0],b=ci(D.me.teach,u.learn)[0];doSwap(u.n,"30 min "+(b||D.me.teach[0]),"30 min "+(a||u.teach[0]));return go("swap")}
+if(d.j){const i=+d.j;D.joined=D.joined.includes(i)?D.joined.filter(a=>a!=i):[...D.joined,i];if(D.joined.includes(i)){badge("💡 Project Contributor");projAct(i)}else rmAct("pr:"+i);save();return draw()}
+if(d.js){D.joinedS=D.joinedS.includes(d.js)?D.joinedS.filter(a=>a!=d.js):[...D.joinedS,d.js];if(D.joinedS.includes(d.js))badge("🌱 First Skill Learned");save();return draw()}
+if(d.sa){const z=D.swaps.find(q=>q.id==d.sa);if(z){z.st="scheduled";save();toast(z.w+" accepted — session scheduled")}return draw()}
+if(d.sx){D.swaps=D.swaps.filter(q=>q.id!=d.sx);save();toast("Swap cancelled");return draw()}
+if(d.sc){const z=D.swaps.find(q=>q.id==d.sc);if(z){z.st="done";badge("🤝 First Skill Exchange");save();swapAct(z)}return draw()}
+if(d.f){S.f[d.f]=!S.f[d.f];return draw()}
+if(d.c){D.c=D.c||[];D.c.includes(d.c)?D.c=D.c.filter(a=>a!=d.c):D.c.push(d.c);if(D.c.includes(d.c))addAct("cm:"+d.c,"community",{name:d.c},null,"Joined community");else rmAct("cm:"+d.c);save();return draw()}
+if(d.t)return toast(d.t);if(d.rep)return toast("Reported "+d.rep+". Our team will review it.");
+if(x.id=="sgo"){doSwap($("#sw").value,$("#so").value,$("#sr").value,$("#sdy2").value,$("#stm").value,$("#sfm").value);return draw()}
+if(x.id=="pgo"){const t=$("#pt").value.trim();if(!t)return toast("Add a title");D.port.push({k:$("#pk").value,t});badge("🏔️ Chitral Creator");save();return draw()}
+if(x.id=="psave"){Object.assign(D.me,{n:$("#pn").value||"Friend",g:$("#pg").value,a:$("#pa").value,teach:sp($("#pt1").value),learn:sp($("#pl").value),int:sp($("#pi").value),av:sp($("#pv").value),hide:{a:$("#ph").checked}});save();toast("Profile saved");return go("home")}
+if(x.id=="nadd"){const s=$("#ns").value.trim();if(!s)return toast("Enter a skill");D.me.teach.push(s);badge("🏅 First Skill Shared");save();toast(s+" added ("+$("#nl").value+", "+$("#nf").value+", max "+$("#nm").value+")");return draw()}
+if(x.id=="scr"){const t=$("#st").value.trim();if(!t)return toast("Give your session a title");D.sessions.push({id:"u"+Date.now(),t,by:D.me.n,lv:$("#sl").value,d:+$("#sd").value,f:$("#sf").value,day:$("#sdy").value,max:+$("#sm").value||8});badge("🏅 First Skill Shared");save();toast("Session published!");return draw()}
+if(x.id=="mv"){const a=+$("#ma").value;if(!a)return toast("Enter your age first");if(a<18)return toast("Mentors must be 18 or older. You can still learn and swap skills!");badge("🌟 Community Mentor");save();return toast("Thank you! We'll verify your details.")}
+if(x.id=="cprev")return cert();
+if(x.id=="cert"){D.skip=!D.skip;save();return draw()}
+if(x.id=="rst"){localStorage.removeItem("sc");location.reload()}
+if(x.id=="lowB"){S.low=!S.low;save();return draw()}
+if(x.id=="demoB")return demo(0)});
+document.addEventListener("input",e=>{if(e.target.id=="q"){S.q=e.target.value;const p=e.target.selectionStart;draw();const q=$("#q");q.focus();q.setSelectionRange(p,p)}});
+$("#lang").onchange=e=>{S.lang=e.target.value;save();draw()};
+const STEPS=[["1. Create a profile","profile",()=>{}],["2. Add a skill she can teach","profile",()=>{if(!D.me.teach.includes("Excel")){D.me.teach.push("Excel")}}],["3. Choose what she wants to learn","profile",()=>{if(!D.me.learn.includes("Mathematics"))D.me.learn.push("Mathematics")}],["4. System finds compatible girls","swap",()=>{}],["5. Propose a Skill Swap","swap",()=>doSwap("Mehak","30 min Canva","30 min Python")],["6. Join a project","projects",()=>{if(!D.joined.includes(1))D.joined.push(1);badge("💡 Project Contributor");projAct(1)}],["7. Discover an opportunity","opps",()=>{}],["8. Add the finished project to her portfolio","portfolio",()=>{if(!D.pf.style)pickStyle("creative");completeProj(1,"Team member","");badge("🏔️ Chitral Creator")}]];
+function demo(i){const o=$("#ov");if(i>=STEPS.length){o.innerHTML="";toast("Demo complete 🎉");return go("home")}
+const s=STEPS[i];s[2]();save();S.v=s[1];S.f={};draw();o.innerHTML=`<div class="demo sans"><b>🎪 ${s[0]}</b> <span class="mut" style="color:#ccc">(${i+1}/${STEPS.length})</span><div class="row" style="margin-top:8px"><button class="btn sm" id="dn">${i==STEPS.length-1?"Finish":"Next →"}</button><button class="btn alt sm" style="color:#fff;border-color:#fff" id="dx">Exit</button></div></div>`;
+$("#dn").onclick=()=>demo(i+1);$("#dx").onclick=()=>o.innerHTML=""}
+
+document.addEventListener("change",e=>{const t=e.target.dataset&&e.target.dataset.sf;if(!t)return;const[id,f]=t.split(":"),z=D.swaps.find(q=>q.id==id);if(z){z[f]=e.target.value;save();toast("Session updated")}});
+initPF();draw();
+if(!S.low){const l=document.createElement("div");l.className="ld";l.innerHTML=document.querySelector(".logo svg").outerHTML+"<b>She Connects</b><small>Learn. Share. Connect. Grow.</small>";document.body.append(l);setTimeout(()=>l.classList.add("x"),900);setTimeout(()=>l.remove(),1300)}
+</script></body></html>
